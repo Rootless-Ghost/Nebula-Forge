@@ -1,0 +1,46 @@
+# ir-chain configuration
+# ========================
+# Edit the paths below to match your environment before running.
+# All relative paths are resolved from the directory where main.py is run.
+
+# -----------------------------------------------------------------------
+# EndpointTriage output directory
+# ir-chain watches this directory for new {HOSTNAME}_{YYYYMMDD_HHMMSS}
+# folders.  Set this to the -OutputPath value used when running
+# Invoke-EndpointTriage.ps1.
+# -----------------------------------------------------------------------
+triage_output_path: "../EndpointTriage/TriageOutput"
+
+# -----------------------------------------------------------------------
+# log-analyzer configuration
+# Point log_analyzer_script at the log_analyzer.py script inside the
+# log-analyzer repo.  log_analyzer_python should be the Python
+# interpreter to use (defaults to the one running ir-chain if omitted).
+# -----------------------------------------------------------------------
+log_analyzer_script: "../log-analyzer/src/log_analyzer.py"
+log_analyzer_python: "python"
+
+# -----------------------------------------------------------------------
+# SIREN endpoint
+# The base URL of the running SIREN Flask application.
+# -----------------------------------------------------------------------
+siren_url: "http://127.0.0.1:5000"
+
+# -----------------------------------------------------------------------
+# Report metadata
+# analyst appears in the generated SIREN incident report.
+# -----------------------------------------------------------------------
+analyst: "ir-chain (automated)"
+
+# -----------------------------------------------------------------------
+# Pipeline behaviour
+# poll_interval_seconds: how often the main loop checks the case queue
+# processed_marker:      filename written inside each case folder after
+#                        successful processing (prevents re-processing)
+# temp_dir:              directory for intermediate adapted CSVs
+# output_dir:            where SIREN Markdown and JSON reports are saved
+# -----------------------------------------------------------------------
+poll_interval_seconds: 5
+processed_marker: ".irchain_processed"
+temp_dir: "./tmp"
+output_dir: "./siren_reports"
