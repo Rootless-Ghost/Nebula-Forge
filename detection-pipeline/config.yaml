@@ -1,0 +1,54 @@
+# detection-pipeline configuration
+# ==================================
+# Edit service URLs to match your environment.
+# All tools default to localhost — adjust ports to match how you run each app.
+#
+# Default ports used in this project:
+#   SigmaForge              → 5000
+#   Threat Intel Dashboard  → 5001
+#   YaraForge               → 5002
+#   SnortForge              → 5003
+
+# -----------------------------------------------------------------------
+# Service URLs
+# -----------------------------------------------------------------------
+threat_intel_url: "http://127.0.0.1:5001"
+sigmaforge_url:   "http://127.0.0.1:5000"
+yaraforge_url:    "http://127.0.0.1:5002"
+snortforge_url:   "http://127.0.0.1:5003"
+
+# -----------------------------------------------------------------------
+# Enrichment filter
+# IOCs with risk_score < risk_threshold are skipped; no rules are
+# generated for them. Score range 0–100.
+#   30  — generate rules for anything Medium risk or above
+#   60  — generate rules only for High and Critical
+#    0  — generate rules for every IOC regardless of score
+# -----------------------------------------------------------------------
+risk_threshold: 30
+
+# -----------------------------------------------------------------------
+# Output
+# -----------------------------------------------------------------------
+output_dir: "./output"
+
+# -----------------------------------------------------------------------
+# Rule metadata
+# -----------------------------------------------------------------------
+author: "detection-pipeline"
+
+# -----------------------------------------------------------------------
+# SigmaForge options
+# -----------------------------------------------------------------------
+sigma:
+  level: "high"           # Sigma severity level: informational | low | medium | high | critical
+  status: "experimental"  # Sigma rule status
+  rule_id_base: 100001    # Starting Wazuh rule ID (increments per IOC)
+  group_name: "sigma_rules"
+
+# -----------------------------------------------------------------------
+# SnortForge options
+# -----------------------------------------------------------------------
+snort:
+  sid_base: 1000001       # Starting Snort SID (increments per IOC)
+  action: "alert"         # Snort rule action: alert | drop | pass | log
