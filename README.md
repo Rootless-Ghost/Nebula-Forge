@@ -36,11 +36,37 @@ flowchart LR
         SR[SIREN\nIR report generation]
     end
 
+    subgraph Pipelines
+        TI[Threat Intel Dashboard\nIOC enrichment]
+        DP[detection-pipeline\nIOC → rules]
+        IC[ir-chain\nAutomated IR]
+    end
+
+    ND[nebula-dashboard\nCentral hub]
+
     Detect --> Investigate --> Respond --> Report
 
     SF -->|Wazuh XML rules| DV
     EF -->|Live telemetry| DV
     DV -->|Detection gap| SF
+
+    TI -->|Enriched IOCs| DP
+    DP -->|Sigma rules| SF
+    DP -->|YARA rules| YF
+    DP -->|Snort rules| SNF
+
+    ET -->|Triage output| IC
+    IC -->|Log analysis| IC
+    IC -->|Incident payload| SR
+
+    ND -.->|monitors| SF
+    ND -.->|monitors| YF
+    ND -.->|monitors| SNF
+    ND -.->|monitors| EF
+    ND -.->|monitors| TI
+    ND -.->|monitors| SR
+    ND -.->|monitors| DP
+    ND -.->|monitors| IC
 ```
 
 ---
