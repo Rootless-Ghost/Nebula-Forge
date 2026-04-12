@@ -17,6 +17,7 @@ instance/
 # Config overrides
 config_local.yaml
 ir-chain/config.yaml
+ir-chain/siren_reports/
 detection-pipeline/config.yaml
 detection-pipeline/output/
 nebula-dashboard/config.yaml
