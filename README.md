@@ -1,4 +1,4 @@
-# NebulaForge
+# Nebula Forge
 
 > Open-source detection engineering and incident response tooling for SOC analysts and purple teams.
 
