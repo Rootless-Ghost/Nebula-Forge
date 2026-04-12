@@ -1,0 +1,94 @@
+# nebula-dashboard configuration
+# =================================
+# Copy this file to config.yaml and adjust values to match your environment.
+# All Nebula Forge tools default to port 5000 — assign distinct ports when
+# running multiple tools at the same time.
+
+# -----------------------------------------------------------------------
+# Dashboard server
+# -----------------------------------------------------------------------
+port: 5010
+
+# -----------------------------------------------------------------------
+# Health-check timeout (seconds)
+# -----------------------------------------------------------------------
+health_timeout: 3
+
+# -----------------------------------------------------------------------
+# Tools
+# Each entry controls the status card for one Nebula Forge tool.
+#   url          — base URL of the running tool
+#   health_path  — GET endpoint used as a liveness probe
+#   label        — display name
+#   description  — one-line summary shown on the card
+#   category     — used to group cards (Detection | Intelligence | Response)
+# -----------------------------------------------------------------------
+tools:
+  sigmaforge:
+    label:       "SigmaForge"
+    url:         "http://127.0.0.1:5000"
+    health_path: "/api/log-sources"
+    description: "Sigma rule generator"
+    category:    "Detection"
+
+  threat_intel:
+    label:       "Threat Intel Dashboard"
+    url:         "http://127.0.0.1:5001"
+    health_path: "/api/health"
+    description: "IOC intelligence & enrichment"
+    category:    "Intelligence"
+
+  yaraforge:
+    label:       "YaraForge"
+    url:         "http://127.0.0.1:5002"
+    health_path: "/"
+    description: "YARA rule editor & tester"
+    category:    "Detection"
+
+  snortforge:
+    label:       "SnortForge"
+    url:         "http://127.0.0.1:5003"
+    health_path: "/api/templates"
+    description: "Snort 2 / Snort 3 rule builder"
+    category:    "Detection"
+
+  siren:
+    label:       "SIREN"
+    url:         "http://127.0.0.1:5004"
+    health_path: "/api/sample"
+    description: "Incident report generator"
+    category:    "Response"
+
+  endpointforge:
+    label:       "EndpointForge"
+    url:         "http://127.0.0.1:5005"
+    health_path: "/"
+    description: "Endpoint detection rule builder"
+    category:    "Detection"
+
+# -----------------------------------------------------------------------
+# Pipeline panels
+# ir_chain:
+#   triage_output_path — where EndpointTriage writes case folders
+#   siren_reports_dir  — where ir-chain saves SIREN JSON reports
+#   processed_marker   — marker file written after a case is processed
+#   max_recent         — how many recent reports to show
+#
+# detection_pipeline:
+#   output_dir  — root output directory (contains timestamped run folders)
+#   max_recent  — how many recent runs to show
+# -----------------------------------------------------------------------
+pipelines:
+  ir_chain:
+    label:              "ir-chain"
+    description:        "EndpointTriage → log-analyzer → SIREN"
+    triage_output_path: "/path/to/EndpointTriage/TriageOutput"
+    siren_reports_dir:  "/path/to/ir-chain/siren_reports"
+    processed_marker:   ".irchain_processed"
+    max_recent:         5
+
+  detection_pipeline:
+    label:       "detection-pipeline"
+    description: "IOC → Threat Intel → Sigma / YARA / Snort"
+    output_dir:  "./output"
+    max_recent:  5
