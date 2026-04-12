@@ -15,6 +15,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 ## The pipeline
 
 ```mermaid
+%%{init: {'theme': 'dark'}}%%
 flowchart LR
     subgraph Detect
         SF[SigmaForge v2\nDetection rule authoring]
@@ -67,6 +68,20 @@ flowchart LR
     ND -.->|monitors| SR
     ND -.->|monitors| DP
     ND -.->|monitors| IC
+
+    classDef detect     fill:#1e3a5f,stroke:#2a5a9f,color:#fff
+    classDef investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
+    classDef respond    fill:#5f1e1e,stroke:#9f2a2a,color:#fff
+    classDef report     fill:#1e5f3a,stroke:#2a9f5a,color:#fff
+    classDef pipeline   fill:#1e4a4a,stroke:#2a7a7a,color:#fff
+    classDef hub        fill:#5f4a1e,stroke:#9f7a2a,color:#fff
+
+    class SF,YF,SNF,EF detect
+    class ET,DV investigate
+    class IR respond
+    class SR report
+    class TI,DP,IC pipeline
+    class ND hub
 ```
 
 ---
