@@ -180,4 +180,11 @@ Fields `containment_date`, `eradication_date`, and `recovery_date` are left blan
 
 ## License
 
-MIT
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+
+<div align="center">
+
+Built by [Rootless-Ghost](https://github.com/Rootless-Ghost) 
+
+</div>
