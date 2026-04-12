@@ -82,6 +82,12 @@ flowchart LR
     class SR report
     class TI,DP,IC pipeline
     class ND hub
+
+    style Detect      fill:#1e3a5f,stroke:#2a5a9f,color:#fff
+    style Investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
+    style Respond     fill:#5f1e1e,stroke:#9f2a2a,color:#fff
+    style Report      fill:#1e5f3a,stroke:#2a9f5a,color:#fff
+    style Pipelines   fill:#1e4a4a,stroke:#2a7a7a,color:#fff
 ```
 
 ---
