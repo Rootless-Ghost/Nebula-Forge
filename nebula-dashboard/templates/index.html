@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula Forge — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="shell">
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Header                                                               -->
+    <!-- ------------------------------------------------------------------ -->
+    <header class="site-header">
+        <a href="/" class="brand">
+            <span class="org">Nebula Forge</span>
+            <span class="sep">/</span>
+            <span>Dashboard</span>
+        </a>
+        <div class="header-right">
+            <span class="last-updated" id="last-updated"></span>
+            <button class="refresh-btn" id="refresh-btn">&#8635; Refresh</button>
+        </div>
+    </header>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Main                                                                 -->
+    <!-- ------------------------------------------------------------------ -->
+    <main class="main">
+
+        <!-- Status banner -->
+        <div class="status-banner" id="status-banner">
+            <span class="spinner"></span>
+            <span class="label">Checking tools&hellip;</span>
+        </div>
+
+        <!-- Tool grid -->
+        <p class="section-title">Tools</p>
+        <div class="tool-grid" id="tool-grid">
+            <!-- populated by dashboard.js -->
+        </div>
+
+        <!-- Pipeline panels -->
+        <p class="section-title">Pipelines</p>
+        <div class="pipeline-grid">
+
+            <!-- ir-chain -->
+            <div class="pipeline-panel">
+                <div class="pipeline-panel-header">
+                    <div>
+                        <div class="pipeline-name">ir-chain</div>
+                        <div class="pipeline-desc">EndpointTriage &rarr; log-analyzer &rarr; SIREN</div>
+                    </div>
+                </div>
+                <div id="irchain-panel">
+                    <!-- populated by dashboard.js -->
+                    <div class="pipeline-body">
+                        <div class="empty-state">Loading&hellip;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- detection-pipeline -->
+            <div class="pipeline-panel">
+                <div class="pipeline-panel-header">
+                    <div>
+                        <div class="pipeline-name">detection-pipeline</div>
+                        <div class="pipeline-desc">IOC &rarr; Threat Intel &rarr; Sigma / YARA / Snort</div>
+                    </div>
+                </div>
+                <div id="detection-panel">
+                    <!-- populated by dashboard.js -->
+                    <div class="pipeline-body">
+                        <div class="empty-state">Loading&hellip;</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /pipeline-grid -->
+
+    </main>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- Footer                                                               -->
+    <!-- ------------------------------------------------------------------ -->
+    <footer class="site-footer">
+        <a href="https://github.com/Rootless-Ghost/Nebula-Forge" target="_blank" rel="noopener">
+            Rootless-Ghost/Nebula-Forge
+        </a>
+    </footer>
+
+</div><!-- /shell -->
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
