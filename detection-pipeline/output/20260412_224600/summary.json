@@ -1,0 +1,53 @@
+{
+  "run_directory": "C:\\Users\\Nebula\\Desktop\\Sec-Projects\\Nebula-Forge\\detection-pipeline\\output\\20260412_224600",
+  "timestamp": "2026-04-12T22:46:00.088585+00:00",
+  "totals": {
+    "input_iocs": 1,
+    "processed": 1,
+    "filtered_out": 0
+  },
+  "rules_generated": {
+    "sigma": 1,
+    "yara": 1,
+    "snort2": 1,
+    "snort3": 1
+  },
+  "rules_failed": {
+    "sigma": 0,
+    "yara": 0,
+    "snort2": 0,
+    "snort3": 0
+  },
+  "iocs": [
+    {
+      "value": "185.220.101.1",
+      "ioc_type": "ip",
+      "risk_score": 47,
+      "risk_level": "MEDIUM",
+      "demo_mode": true,
+      "directory": "ip/185_220_101_1",
+      "rules": {
+        "yara": {
+          "success": true,
+          "file": "ip/185_220_101_1/rule.yar"
+        },
+        "sigma": {
+          "success": true,
+          "file": "ip/185_220_101_1/sigma.yml"
+        },
+        "sigma_conversions": {
+          "success": true,
+          "file": "ip/185_220_101_1/sigma_conversions.json"
+        },
+        "snort2": {
+          "success": true,
+          "file": "ip/185_220_101_1/rule.snort2.rules"
+        },
+        "snort3": {
+          "success": true,
+          "file": "ip/185_220_101_1/rule.snort3.rules"
+        }
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 # ir-chain configuration
 # ========================
-# Edit the paths below to match your environment before running.
+# Copy this file to config.yaml and edit the paths below to match your
+# environment before running.
 # All relative paths are resolved from the directory where main.py is run.
 
 # -----------------------------------------------------------------------
@@ -9,7 +10,7 @@
 # folders.  Set this to the -OutputPath value used when running
 # Invoke-EndpointTriage.ps1.
 # -----------------------------------------------------------------------
-triage_output_path: "C:\\Users\\Nebula\\Desktop\\Sec-Projects\\EndpointTriage\\TriageOutput"
+triage_output_path: "/path/to/EndpointTriage/TriageOutput"
 
 # -----------------------------------------------------------------------
 # log-analyzer configuration
@@ -17,7 +18,7 @@ triage_output_path: "C:\\Users\\Nebula\\Desktop\\Sec-Projects\\EndpointTriage\\T
 # log-analyzer repo.  log_analyzer_python should be the Python
 # interpreter to use (defaults to the one running ir-chain if omitted).
 # -----------------------------------------------------------------------
-log_analyzer_script: "C:\\Users\\Nebula\\Desktop\\Sec-Projects\\log-analyzer\\src\\log_analyzer.py"
+log_analyzer_script: "/path/to/log-analyzer/src/log_analyzer.py"
 log_analyzer_python: "python"
 
 # -----------------------------------------------------------------------
@@ -43,4 +44,4 @@ analyst: "ir-chain (automated)"
 poll_interval_seconds: 5
 processed_marker: ".irchain_processed"
 temp_dir: "./tmp"
-output_dir: "C:\\Users\\Nebula\\Desktop\\Sec-Projects\\Nebula-Forge\\ir-chain\\siren_reports"
+output_dir: "/path/to/ir-chain/siren_reports"

@@ -16,6 +16,8 @@ instance/
 
 # Config overrides
 config_local.yaml
+ir-chain/config.yaml
+detection-pipeline/config.yaml
 
 # OS
 .DS_Store
