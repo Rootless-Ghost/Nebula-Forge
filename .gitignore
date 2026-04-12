@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+venv/
+
+# Flask
+instance/
+
+# Database
+*.db
+*.sqlite3
+
+# Config overrides
+config_local.yaml
+
+# OS
+.DS_Store
+Thumbs.db
