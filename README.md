@@ -22,112 +22,61 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 ```mermaid
 %%{init: {'theme': 'dark', 'themeVariables': {'clusterBkg': '#1a1a2e', 'clusterBorder': '#444', 'titleColor': '#ffffff'}}}%%
-flowchart LR
-    subgraph Detect
-        SF[SigmaForge v2\nDetection rule authoring]
-        YF[YaraForge\nFile-based signatures]
-        SNF[SnortForge\nNetwork signatures]
-        EF[EndpointForge\nRuntime telemetry]
-        DW[DriftWatch\nRule drift analysis]
-        CQ[ClusterIQ\nAlert clustering]
+graph LR
+    subgraph PIPES[Detection Pipelines]
+        DP[detection-pipeline]
+        DS[drift-scan]
+        PL[purple-loop]
     end
 
-    subgraph Normalize
-        LN[LogNorm\nECS-lite normalizer]
+    subgraph TOOLS[Detection Tools]
+        SF[SigmaForge v2]
+        LN[LogNorm]
+        HF[HuntForge]
     end
 
-    subgraph Hunt
-        HF[HuntForge\nPlaybook generator]
+    subgraph VALIDATE[Validate]
+        DW[DriftWatch]
+        CQ[ClusterIQ]
+        AL[AtomicLoop]
     end
 
-    subgraph PurpleTeam
-        AL[AtomicLoop\nAtomic test runner]
+    subgraph IRCHAIN[Incident Response]
+        ET[EndpointTriage]
+        IC[ir-chain]
+        SR[SIREN]
     end
 
-    subgraph Investigate
-        ET[EndpointTriage\nForensic collection]
-        DV[Detection validation\nSigma → Wazuh → live]
-    end
+    DP --> SF
+    ET --> IC
+    IC --> SR
+    LN --> DW
+    LN --> CQ
+    SF --> DW
+    HF --> AL
+    AL --> DW
+    PL --> HF
+    PL --> AL
+    PL --> DW
+    DS --> LN
+    DS --> SF
+    DS --> DW
 
-    subgraph Respond
-        IR[IR triage\nContain and mitigate]
-    end
+    classDef detect    fill:#1e3a5f,stroke:#2a5a9f,color:#fff
+    classDef normalize fill:#1e3a2a,stroke:#2a7a4a,color:#fff
+    classDef hunt      fill:#2a1e5f,stroke:#4a2a9f,color:#fff
+    classDef purple    fill:#5f1e3a,stroke:#9f2a5a,color:#fff
+    classDef pipeline  fill:#1e4a4a,stroke:#2a7a7a,color:#fff
+    classDef respond   fill:#5f1e1e,stroke:#9f2a2a,color:#fff
+    classDef report    fill:#1e5f3a,stroke:#2a9f5a,color:#fff
 
-    subgraph Report
-        SR[SIREN\nIR report generation]
-    end
-
-    subgraph Pipelines
-        TI[Threat Intel Dashboard\nIOC enrichment]
-        DP[detection-pipeline\nIOC → rules]
-        IC[ir-chain\nAutomated IR]
-        DS[drift-scan\nLog → gap analysis]
-        PL[purple-loop\nHunt → execute → validate]
-    end
-
-    ND[nebula-dashboard\nCentral hub]
-
-    SF -->|Wazuh XML rules| DV
-    EF -->|Live telemetry| DV
-    EF -->|Run Full Triage| ET
-    DV -->|Detection gap| SF
-    ET --> IR
-    IR --> SR
-
-    TI -->|Enriched IOCs| DP
-    DP -->|Sigma rules| SF
-    DP -->|YARA rules| YF
-    DP -->|Snort rules| SNF
-
-    ET -->|Triage output| IC
-    ET -->|Log analysis| IC
-    IC -->|Incident payload| SR
-
-    LN -->|ECS-lite events| DW
-    LN -->|ECS-lite events| CQ
-    SF -->|Sigma rules| DW
-    HF -->|Playbook + Sigma| AL
-    AL -->|ECS-lite events| DW
-
-    DS -->|uses| LN
-    DS -->|fetches rules| SF
-    DS -->|drift report| DW
-    PL -->|playbook| HF
-    PL -->|execute| AL
-    PL -->|validate| DW
-
-    ND -->|monitors| SF
-    ND -->|monitors| YF
-    ND -->|monitors| SNF
-    ND -->|monitors| EF
-    ND -->|monitors| TI
-    ND -->|monitors| SR
-    ND -->|monitors| LN
-    ND -->|monitors| HF
-    ND -->|monitors| DW
-    ND -->|monitors| CQ
-    ND -->|monitors| AL
-
-    classDef detect     fill:#1e3a5f,stroke:#2a5a9f,color:#fff
-    classDef normalize  fill:#1e3a2a,stroke:#2a7a4a,color:#fff
-    classDef hunt       fill:#2a1e5f,stroke:#4a2a9f,color:#fff
-    classDef purple     fill:#5f1e3a,stroke:#9f2a5a,color:#fff
-    classDef investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
-    classDef respond    fill:#5f1e1e,stroke:#9f2a2a,color:#fff
-    classDef report     fill:#1e5f3a,stroke:#2a9f5a,color:#fff
-    classDef pipeline   fill:#1e4a4a,stroke:#2a7a7a,color:#fff
-    classDef hub        fill:#5f4a1e,stroke:#9f7a2a,color:#fff
-
-    class SF,YF,SNF,EF,DW,CQ detect
+    class SF,DW detect
     class LN normalize
     class HF hunt
     class AL purple
-    class ET,DV investigate
-    class IR respond
+    class DP,DS,PL pipeline
+    class ET,IC respond
     class SR report
-    class TI,DP,IC,DS,PL pipeline
-    class ND hub
-
 ```
 
 ---
