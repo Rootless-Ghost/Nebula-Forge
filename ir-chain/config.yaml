@@ -24,7 +24,7 @@ log_analyzer_python: "python"
 # SIREN endpoint
 # The base URL of the running SIREN Flask application.
 # -----------------------------------------------------------------------
-siren_url: "http://127.0.0.1:5000"
+siren_url: "http://127.0.0.1:5004"
 
 # -----------------------------------------------------------------------
 # Report metadata

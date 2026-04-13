@@ -80,6 +80,8 @@ def post_to_siren(
         _save_fallback(payload, output_dir, case_name)
         return None
 
+    print("[DEBUG] SIREN raw response:", data)
+
     if not data.get("success"):
         logger.error("SIREN reported failure: %s", data.get("error", "unknown error"))
         _save_fallback(payload, output_dir, case_name)
