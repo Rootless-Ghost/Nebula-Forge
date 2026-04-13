@@ -58,7 +58,7 @@ flowchart LR
     DP -->|Snort rules| SNF
 
     ET -->|Triage output| IC
-    IC -->|Log analysis| IC
+    ET -->|Log analysis| IC
     IC -->|Incident payload| SR
 
     ND -.->|monitors| SF
