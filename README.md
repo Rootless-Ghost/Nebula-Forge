@@ -21,7 +21,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 ## The pipeline
 
 ```mermaid
-%%{init: {'theme': 'dark', 'themeVariables': {'clusterBkg': '#1a1a2e', 'clusterBorder': '#444', 'titleColor': '#ffffff'}}}%%
+%%{init: {'theme': 'dark', 'themeVariables': {'clusterBkg': '#1a1a2e', 'clusterBorder': '#444', 'titleColor': '#ffffff'}, 'flowchart': {'curve': 'cardinal'}}}%%
 graph LR
     subgraph PIPES[Detection Pipelines]
         TI[Threat Intel]
@@ -31,7 +31,7 @@ graph LR
     end
 
     subgraph TOOLS[Detection Tools]
-        SF[SigmaForge v2]
+        SF[SigmaForge]
         YF[YaraForge]
         SNF[SnortForge]
         EF[EndpointForge]
@@ -51,7 +51,7 @@ graph LR
         SR[SIREN]
     end
 
-    ND[nebula-dashboard]
+    ND[Dashboard]
 
     TI --> DP
     DP --> SF
@@ -103,6 +103,12 @@ graph LR
     class TI intel
     class DP,DS,PL pipeline
     class ND hub
+
+    linkStyle 0,1,4,5,6,7,8 stroke:#3fb950,stroke-width:2px
+    linkStyle 2,3 stroke:#f0883e,stroke-width:2px
+    linkStyle 9,10,11,12,13,14 stroke:#bc8cff,stroke-width:2px
+    linkStyle 15 stroke:#39c5bb,stroke-width:1.5px
+    linkStyle 16,17,18,19,20,21,22,23,24,25,26,27 stroke:#58a6ff,stroke-width:1.5px
 ```
 
 ---
