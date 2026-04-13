@@ -66,6 +66,41 @@ tools:
     description: "Endpoint detection rule builder"
     category:    "Detection"
 
+  lognorm:
+    label:       "LogNorm"
+    url:         "http://127.0.0.1:5006"
+    health_path: "/api/health"
+    description: "Log source normalizer — Sysmon / WEL / Wazuh / syslog / CEF → ECS-lite"
+    category:    "Normalize"
+
+  huntforge:
+    label:       "HuntForge"
+    url:         "http://127.0.0.1:5007"
+    health_path: "/api/health"
+    description: "MITRE ATT&CK threat hunt playbook generator"
+    category:    "Detection"
+
+  driftwatch:
+    label:       "DriftWatch"
+    url:         "http://127.0.0.1:5008"
+    health_path: "/api/health"
+    description: "Detection drift analyzer for Sigma rules"
+    category:    "Detection"
+
+  clusteriq:
+    label:       "ClusterIQ"
+    url:         "http://127.0.0.1:5009"
+    health_path: "/api/health"
+    description: "Contextual alert clustering engine"
+    category:    "Detection"
+
+  atomicloop:
+    label:       "AtomicLoop"
+    url:         "http://127.0.0.1:5011"
+    health_path: "/api/health"
+    description: "Atomic Red Team test runner and detection validator"
+    category:    "Detection"
+    
 # -----------------------------------------------------------------------
 # Pipeline panels
 # ir_chain:
@@ -92,3 +127,10 @@ pipelines:
     description: "IOC → Threat Intel → Sigma / YARA / Snort"
     output_dir:  "../detection-pipeline/output"
     max_recent:  5
+
+  purple_loop:
+    label:          "purple-loop"
+    description:    "AtomicLoop → LogNorm → DriftWatch → Sigma validation"
+    atomicloop_url: "http://127.0.0.1:5011"
+    lognorm_url:    "http://127.0.0.1:5006"
+    driftwatch_url: "http://127.0.0.1:5008"
