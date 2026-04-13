@@ -105,6 +105,13 @@ _DEFAULTS = {
             "description": "Detection drift analyzer for Sigma rules",
             "category":    "Detection",
         },
+        "clusteriq": {
+            "label":       "ClusterIQ",
+            "url":         "http://127.0.0.1:5009",
+            "health_path": "/api/health",
+            "description": "Contextual alert clustering engine",
+            "category":    "Detection",
+        },
     },
     "pipelines": {
         "ir_chain": {
