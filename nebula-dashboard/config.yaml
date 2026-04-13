@@ -134,3 +134,11 @@ pipelines:
     atomicloop_url: "http://127.0.0.1:5011"
     lognorm_url:    "http://127.0.0.1:5006"
     driftwatch_url: "http://127.0.0.1:5008"
+
+  drift_scan:
+    label:          "drift-scan"
+    description:    "Normalize raw logs → fetch Sigma rules → DriftWatch coverage analysis"
+    lognorm_url:    "http://127.0.0.1:5006"
+    sigmaforge_url: "http://127.0.0.1:5000"
+    driftwatch_url: "http://127.0.0.1:5008"
+    output_dir:     "../pipelines/drift-scan/output"
