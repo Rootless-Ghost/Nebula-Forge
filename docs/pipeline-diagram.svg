@@ -46,7 +46,7 @@
   <path d="M 400,120 C 458,120 458,130 520,130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
 
   <!-- LogNorm → DriftWatch  (up-right across gap) -->
-  <path d="M 400,360 C 458,360 458,130 520,130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <path d="M 400,360 C 440,360 440,50 520,130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
 
   <!-- LogNorm → ClusterIQ -->
   <path d="M 400,360 C 458,360 458,210 520,210" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
@@ -74,19 +74,19 @@
   <path d="M 170,310 C 222,310 222,420 280,420" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- purple-loop → AtomicLoop  (long, across Tools gap) -->
-  <path d="M 170,310 C 340,310 340,290 520,290" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 170,310 C 170,500 520,500 520,290" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- purple-loop → DriftWatch  (arc over all boxes) -->
-  <path d="M 110,293 C 110,28 500,28 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 110,293 C 110,-20 520,-20 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- drift-scan → LogNorm -->
-  <path d="M 170,250 C 218,250 218,360 280,360" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 170,250 C 200,300 240,360 280,360" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- drift-scan → SigmaForge -->
-  <path d="M 170,250 C 218,250 218,120 280,120" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 170,250 C 200,200 240,120 280,120" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- drift-scan → DriftWatch  (arc over boxes) -->
-  <path d="M 170,237 C 260,25 455,50 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 170,237 C 170,-10 520,-10 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
 
   <!-- ── TELEMETRY  #39c5bb solid ── -->
 
