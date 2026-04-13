@@ -345,6 +345,32 @@ def _detection_pipeline_status() -> dict:
     }
 
 
+@app.route("/api/reports")
+def api_reports():
+    """Return all SIREN incident reports from siren_reports_dir, newest first."""
+    cfg = _config.get("pipelines", {}).get("ir_chain", {})
+    reports_dir = os.path.abspath(cfg.get("siren_reports_dir", ""))
+
+    reports = []
+    if os.path.isdir(reports_dir):
+        for fname in os.listdir(reports_dir):
+            if not fname.endswith(".json") or fname.startswith("fallback_"):
+                continue
+            fpath = os.path.join(reports_dir, fname)
+            try:
+                mtime = os.path.getmtime(fpath)
+                with open(fpath, encoding="utf-8") as fh:
+                    data = json.load(fh)
+                data["_file"] = fname
+                data["_modified"] = datetime.utcfromtimestamp(mtime).isoformat() + "Z"
+                reports.append((mtime, data))
+            except Exception as exc:
+                logger.warning("Could not read report %s: %s", fname, exc)
+
+    reports.sort(key=lambda x: x[0], reverse=True)
+    return jsonify([r for _, r in reports])
+
+
 @app.route("/api/pipeline/ir-chain")
 def api_pipeline_irchain():
     return jsonify(_irchain_status())

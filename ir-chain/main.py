@@ -13,14 +13,20 @@ Process existing unprocessed cases then exit:
 
 Re-process a specific case folder (ignores processed marker):
     python main.py --case /path/to/TriageOutput/WORKSTATION01_20260412_141500
+
+Delete processed case folders older than retention_days (default 30):
+    python main.py --purge-processed
 """
 
 import argparse
 import logging
 import os
 import queue
+import re
+import shutil
 import signal
 import sys
+from datetime import datetime, timezone
 
 import yaml
 
@@ -54,6 +60,7 @@ DEFAULT_CONFIG = {
     "processed_marker": ".irchain_processed",
     "temp_dir": "./tmp",
     "output_dir": "./siren_reports",
+    "retention_days": 30,
 }
 
 
@@ -137,6 +144,85 @@ def process_case(case_path: str, config: dict) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# Purge
+# ---------------------------------------------------------------------------
+
+_CASE_PATTERN = re.compile(r"^[A-Za-z0-9_-]+_(\d{8})_(\d{6})$")
+
+
+def purge_processed_cases(config: dict) -> None:
+    """
+    Delete processed EndpointTriage case folders older than retention_days.
+
+    A folder is eligible for deletion only if:
+      - Its name matches the HOSTNAME_YYYYMMDD_HHMMSS pattern
+      - It contains the processed_marker file
+      - The timestamp embedded in its name is older than retention_days
+    """
+    triage_path    = os.path.abspath(config.get("triage_output_path", "./TriageOutput"))
+    marker         = config.get("processed_marker", ".irchain_processed")
+    retention_days = int(config.get("retention_days", 30))
+
+    print(f"[purge] Triage path    : {triage_path}")
+    print(f"[purge] Retention      : {retention_days} days")
+    print(f"[purge] Processed mark : {marker}")
+    print()
+
+    if not os.path.isdir(triage_path):
+        print(f"[purge] ERROR: triage path does not exist: {triage_path}")
+        sys.exit(1)
+
+    now = datetime.now(timezone.utc)
+    candidates = []
+
+    for entry in os.scandir(triage_path):
+        if not entry.is_dir():
+            continue
+        m = _CASE_PATTERN.match(entry.name)
+        if not m:
+            continue
+        if not os.path.exists(os.path.join(entry.path, marker)):
+            continue
+        # Parse age from the timestamp embedded in the folder name
+        try:
+            folder_dt = datetime.strptime(
+                f"{m.group(1)}_{m.group(2)}", "%Y%m%d_%H%M%S"
+            ).replace(tzinfo=timezone.utc)
+        except ValueError:
+            logger.warning("Could not parse timestamp from folder name: %s", entry.name)
+            continue
+        age_days = (now - folder_dt).days
+        if age_days >= retention_days:
+            candidates.append((entry.name, entry.path, age_days))
+
+    if not candidates:
+        print(f"[purge] No processed cases older than {retention_days} days found.")
+        return
+
+    candidates.sort(key=lambda x: x[2], reverse=True)
+    print(f"[purge] Found {len(candidates)} case(s) to delete:")
+    for name, _, age_days in candidates:
+        print(f"  - {name}  ({age_days} days old)")
+    print()
+
+    purged = []
+    errors = []
+    for name, path, _ in candidates:
+        try:
+            shutil.rmtree(path)
+            purged.append(name)
+            print(f"  [deleted] {name}")
+        except Exception as exc:
+            errors.append((name, exc))
+            print(f"  [ERROR]   {name}: {exc}")
+
+    print()
+    print(f"[purge] Done — {len(purged)} deleted, {len(errors)} error(s).")
+    if errors:
+        sys.exit(1)
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -159,6 +245,13 @@ def parse_args() -> argparse.Namespace:
         help="Process a single specific case folder and exit",
     )
     p.add_argument(
+        "--purge-processed", action="store_true",
+        help=(
+            "Delete processed case folders older than retention_days "
+            "(set in config.yaml, default 30) then exit"
+        ),
+    )
+    p.add_argument(
         "--log-level", default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
         help="Log verbosity (default: INFO)",
@@ -173,6 +266,13 @@ def main() -> None:
     config = load_config(args.config)
 
     _print_banner(config)
+
+    # ------------------------------------------------------------------ #
+    # Mode: purge processed cases                                          #
+    # ------------------------------------------------------------------ #
+    if args.purge_processed:
+        purge_processed_cases(config)
+        return
 
     # ------------------------------------------------------------------ #
     # Mode: single case                                                    #

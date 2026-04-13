@@ -240,23 +240,229 @@ function renderDetectionPipeline(data) {
 }
 
 // ---------------------------------------------------------------------------
+// Incident reports
+// ---------------------------------------------------------------------------
+
+async function fetchReports() {
+    try {
+        const resp = await fetch("/api/reports");
+        const data = await resp.json();
+        renderReportList(data);
+    } catch (err) {
+        console.error("Reports fetch failed:", err);
+    }
+}
+
+function renderReportList(reports) {
+    const section = el("reports-section");
+    if (!reports || reports.length === 0) {
+        section.innerHTML = '<div class="empty-state">No incident reports yet.</div>';
+        return;
+    }
+
+    section.innerHTML = `
+        <div class="report-list">
+            ${reports.map((r, i) => {
+                const sev = (r.severity || "").toLowerCase();
+                const sevBadge = sev
+                    ? `<span class="severity-badge ${sev}">${escapeHtml(r.severity)}</span>`
+                    : "";
+                const iocCount  = (r.iocs  || []).length;
+                const sysCount  = (r.affected_systems || []).length;
+                const tlCount   = (r.timeline || []).length;
+                return `
+                <div class="report-list-item" role="button" tabindex="0"
+                     data-report-index="${i}" title="Click to view full report">
+                    <div class="rli-left">
+                        <span class="rli-id">${escapeHtml(r.incident_id || "—")}</span>
+                        <span class="rli-title">${escapeHtml(r.title || r._file)}</span>
+                    </div>
+                    <div class="rli-right">
+                        ${sevBadge}
+                        <span class="rli-meta">${escapeHtml(r.category || "")}</span>
+                        <span class="rli-meta">${iocCount} IOC${iocCount !== 1 ? "s" : ""}</span>
+                        <span class="rli-meta">${sysCount} system${sysCount !== 1 ? "s" : ""}</span>
+                        <span class="rli-meta rli-time">${timeAgo(r._modified)}</span>
+                        <span class="rli-arrow">&#8250;</span>
+                    </div>
+                </div>`;
+            }).join("")}
+        </div>`;
+
+    // Store reports data for click handler
+    section._reports = reports;
+
+    section.querySelectorAll(".report-list-item").forEach(item => {
+        const open = () => {
+            const idx = parseInt(item.dataset.reportIndex, 10);
+            openReport(section._reports[idx]);
+        };
+        item.addEventListener("click", open);
+        item.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") open(); });
+    });
+}
+
+function openReport(r) {
+    el("report-modal-id").textContent    = r.incident_id || "";
+    el("report-modal-title").textContent = r.title || r._file || "Untitled";
+
+    const dates  = r.dates  || {};
+    const score  = r.severity_score || {};
+    const tl     = r.timeline || [];
+    const iocs   = r.iocs || [];
+    const systems = r.affected_systems || [];
+    const recs   = r.recommendations || [];
+
+    const dateRow = [
+        ["Detection",    dates.detection],
+        ["Containment",  dates.containment],
+        ["Eradication",  dates.eradication],
+        ["Recovery",     dates.recovery],
+    ].filter(([, v]) => v).map(([label, val]) => `
+        <div class="rd-date-item">
+            <span class="rd-date-label">${escapeHtml(label)}</span>
+            <span class="rd-date-value">${escapeHtml(val)}</span>
+        </div>`).join("");
+
+    const tlRows = tl.map((e, i) => `
+        <tr>
+            <td class="rd-td-num">${i + 1}</td>
+            <td class="rd-td-mono">${escapeHtml(e.timestamp || "")}</td>
+            <td>${escapeHtml(e.description || "")}</td>
+            <td class="rd-td-muted">${escapeHtml(e.source || "—")}</td>
+        </tr>`).join("");
+
+    const iocRows = iocs.map((ioc, i) => `
+        <tr>
+            <td class="rd-td-num">${i + 1}</td>
+            <td class="rd-td-muted">${escapeHtml(ioc.ioc_type || "")}</td>
+            <td class="rd-td-mono">${escapeHtml(ioc.value || "")}</td>
+            <td class="rd-td-muted">${escapeHtml(ioc.context || "—")}</td>
+        </tr>`).join("");
+
+    const sysRows = systems.map((s, i) => `
+        <tr>
+            <td class="rd-td-num">${i + 1}</td>
+            <td class="rd-td-mono">${escapeHtml(s.hostname || "")}</td>
+            <td class="rd-td-mono">${escapeHtml(s.ip_address || "")}</td>
+            <td class="rd-td-muted">${escapeHtml(s.impact || "—")}</td>
+        </tr>`).join("");
+
+    const sev = (r.severity || "").toLowerCase();
+    const sevBadge = sev
+        ? `<span class="severity-badge ${sev}">${escapeHtml(r.severity)}</span>`
+        : "";
+
+    el("report-modal-body").innerHTML = `
+        <div class="rd-meta-grid">
+            <div class="rd-meta-item"><span class="rd-meta-label">Severity</span>
+                <span>${sevBadge}</span></div>
+            <div class="rd-meta-item"><span class="rd-meta-label">Category</span>
+                <span class="rd-meta-value">${escapeHtml(r.category || "—")}</span></div>
+            <div class="rd-meta-item"><span class="rd-meta-label">Analyst</span>
+                <span class="rd-meta-value">${escapeHtml(r.analyst || "—")}</span></div>
+            <div class="rd-meta-item"><span class="rd-meta-label">Score</span>
+                <span class="rd-meta-value">${score.score != null ? score.score + "/10 (" + escapeHtml(score.rating || "") + ")" : "—"}</span></div>
+            <div class="rd-meta-item"><span class="rd-meta-label">Created</span>
+                <span class="rd-meta-value">${escapeHtml(r.created_at || "—")}</span></div>
+        </div>
+
+        ${dateRow ? `<div class="rd-dates">${dateRow}</div>` : ""}
+
+        ${r.description ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Description</div>
+            <div class="rd-text">${escapeHtml(r.description)}</div>
+        </div>` : ""}
+
+        ${r.executive_summary ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Executive Summary</div>
+            <div class="rd-text">${escapeHtml(r.executive_summary)}</div>
+        </div>` : ""}
+
+        ${tl.length ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Timeline <span class="rd-count">${tl.length}</span></div>
+            <table class="rd-table">
+                <thead><tr><th>#</th><th>Timestamp</th><th>Event</th><th>Source</th></tr></thead>
+                <tbody>${tlRows}</tbody>
+            </table>
+        </div>` : ""}
+
+        ${iocs.length ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Indicators of Compromise <span class="rd-count">${iocs.length}</span></div>
+            <table class="rd-table">
+                <thead><tr><th>#</th><th>Type</th><th>Value</th><th>Context</th></tr></thead>
+                <tbody>${iocRows}</tbody>
+            </table>
+        </div>` : ""}
+
+        ${systems.length ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Affected Systems <span class="rd-count">${systems.length}</span></div>
+            <table class="rd-table">
+                <thead><tr><th>#</th><th>Hostname</th><th>IP</th><th>Impact</th></tr></thead>
+                <tbody>${sysRows}</tbody>
+            </table>
+        </div>` : ""}
+
+        ${recs.length ? `
+        <div class="rd-section">
+            <div class="rd-section-title">Recommendations <span class="rd-count">${recs.length}</span></div>
+            <ol class="rd-recs">${recs.map(rec => `<li>${escapeHtml(rec)}</li>`).join("")}</ol>
+        </div>` : ""}
+    `;
+
+    const overlay = el("report-modal-overlay");
+    overlay.style.display = "flex";
+    overlay.scrollTop = 0;
+    el("report-modal-body").scrollTop = 0;
+    el("report-modal-close").focus();
+}
+
+function closeReport() {
+    el("report-modal-overlay").style.display = "none";
+}
+
+// ---------------------------------------------------------------------------
 // Auto-refresh
 // ---------------------------------------------------------------------------
 
-let refreshTimer = null;
+let refreshTimer    = null;
+let countdownTimer  = null;
+let nextRefreshAt   = null;
+
+function startCountdown() {
+    clearInterval(countdownTimer);
+    nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+    countdownTimer = setInterval(() => {
+        const secs = Math.max(0, Math.round((nextRefreshAt - Date.now()) / 1000));
+        el("last-updated").textContent = `Refreshing in ${secs}s`;
+    }, 1000);
+}
+
+function stopCountdown() {
+    clearInterval(countdownTimer);
+    el("last-updated").textContent = "Refreshing\u2026";
+}
 
 function scheduleRefresh() {
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(() => {
         refresh();
     }, REFRESH_INTERVAL_MS);
+    startCountdown();
 }
 
 async function refresh() {
+    stopCountdown();
     await Promise.all([
         fetchStatus(),
         fetchIrChain(),
         fetchDetectionPipeline(),
+        fetchReports(),
     ]);
     scheduleRefresh();
 }
@@ -268,7 +474,17 @@ async function refresh() {
 document.addEventListener("DOMContentLoaded", () => {
     el("refresh-btn").addEventListener("click", () => {
         clearTimeout(refreshTimer);
+        clearInterval(countdownTimer);
         refresh();
+    });
+
+    // Modal close handlers
+    el("report-modal-close").addEventListener("click", closeReport);
+    el("report-modal-overlay").addEventListener("click", e => {
+        if (e.target === el("report-modal-overlay")) closeReport();
+    });
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape") closeReport();
     });
 
     refresh();
