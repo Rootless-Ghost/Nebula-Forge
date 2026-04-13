@@ -95,30 +95,26 @@
 
   <!-- ── MONITORS  #58a6ff dotted  (fan into ND left edge x=780) ── -->
 
-  <!-- DriftWatch → ND -->
-  <path d="M 640,130 C 712,130 752,248 780,248" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- SigmaForge → ND -->
-  <path d="M 400,120 C 596,120 696,251 780,251" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- Threat Intel → ND -->
-  <path d="M 170,130 C 484,130 668,254 780,254" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,120 C 596,120 696,258 780,258" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- YaraForge → ND -->
-  <path d="M 400,180 C 596,180 696,257 780,257" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- det-pipeline → ND -->
-  <path d="M 170,190 C 484,190 668,260 780,260" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- ClusterIQ → ND -->
-  <path d="M 640,210 C 712,210 752,263 780,263" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,180 C 596,180 696,274 780,274" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- SnortForge → ND -->
-  <path d="M 400,240 C 596,240 696,266 780,266" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- AtomicLoop → ND -->
-  <path d="M 640,290 C 712,290 752,269 780,269" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,240 C 596,240 696,290 780,290" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- EndpointForge → ND -->
-  <path d="M 400,300 C 596,300 696,272 780,272" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,300 C 596,300 696,306 780,306" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- LogNorm → ND -->
-  <path d="M 400,360 C 596,360 696,275 780,275" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,360 C 596,360 696,322 780,322" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
   <!-- HuntForge → ND -->
-  <path d="M 400,420 C 596,420 696,278 780,278" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- ir-chain → ND -->
-  <path d="M 640,500 C 720,500 756,283 780,283" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <path d="M 400,420 C 596,420 696,338 780,338" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <!-- DriftWatch → ND -->
+  <path d="M 640,130 C 712,130 752,354 780,354" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <!-- ClusterIQ → ND -->
+  <path d="M 640,210 C 712,210 752,370 780,370" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <!-- AtomicLoop → ND -->
+  <path d="M 640,290 C 712,290 752,386 780,386" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <!-- SIREN → ND -->
+  <path d="M 640,570 C 720,570 756,402 780,402" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
 
   <!-- ══════════════════════════════════════════════════ -->
   <!-- NODES                                              -->
