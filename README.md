@@ -24,6 +24,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 %%{init: {'theme': 'dark', 'themeVariables': {'clusterBkg': '#1a1a2e', 'clusterBorder': '#444', 'titleColor': '#ffffff'}}}%%
 graph LR
     subgraph PIPES[Detection Pipelines]
+        TI[Threat Intel]
         DP[detection-pipeline]
         DS[drift-scan]
         PL[purple-loop]
@@ -31,6 +32,9 @@ graph LR
 
     subgraph TOOLS[Detection Tools]
         SF[SigmaForge v2]
+        YF[YaraForge]
+        SNF[SnortForge]
+        EF[EndpointForge]
         LN[LogNorm]
         HF[HuntForge]
     end
@@ -47,6 +51,9 @@ graph LR
         SR[SIREN]
     end
 
+    ND[nebula-dashboard]
+
+    TI --> DP
     DP --> SF
     ET --> IC
     IC --> SR
@@ -61,22 +68,32 @@ graph LR
     DS --> LN
     DS --> SF
     DS --> DW
+    SF -.->|monitors| ND
+    DW -.->|monitors| ND
+    IC -.->|monitors| ND
+    DP -.->|monitors| ND
 
-    classDef detect    fill:#1e3a5f,stroke:#2a5a9f,color:#fff
-    classDef normalize fill:#1e3a2a,stroke:#2a7a4a,color:#fff
-    classDef hunt      fill:#2a1e5f,stroke:#4a2a9f,color:#fff
-    classDef purple    fill:#5f1e3a,stroke:#9f2a5a,color:#fff
-    classDef pipeline  fill:#1e4a4a,stroke:#2a7a7a,color:#fff
-    classDef respond   fill:#5f1e1e,stroke:#9f2a2a,color:#fff
-    classDef report    fill:#1e5f3a,stroke:#2a9f5a,color:#fff
+    classDef detect      fill:#1e3a5f,stroke:#2a5a9f,color:#fff
+    classDef normalize   fill:#1e3a2a,stroke:#2a7a4a,color:#fff
+    classDef hunt        fill:#2a1e5f,stroke:#4a2a9f,color:#fff
+    classDef purple      fill:#5f1e3a,stroke:#9f2a5a,color:#fff
+    classDef investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
+    classDef respond     fill:#5f1e1e,stroke:#9f2a2a,color:#fff
+    classDef report      fill:#1e5f3a,stroke:#2a9f5a,color:#fff
+    classDef pipeline    fill:#1e4a4a,stroke:#2a7a7a,color:#fff
+    classDef hub         fill:#5f4a1e,stroke:#9f7a2a,color:#fff
+    classDef intel       fill:#1e4a4a,stroke:#2a6a6a,color:#fff
 
-    class SF,DW detect
+    class SF,YF,SNF,EF,DW,CQ detect
     class LN normalize
     class HF hunt
     class AL purple
-    class DP,DS,PL pipeline
-    class ET,IC respond
+    class ET investigate
+    class IC respond
     class SR report
+    class TI intel
+    class DP,DS,PL pipeline
+    class ND hub
 ```
 
 ---
