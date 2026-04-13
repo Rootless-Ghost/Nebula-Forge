@@ -61,14 +61,14 @@ flowchart LR
     ET -->|Log analysis| IC
     IC -->|Incident payload| SR
 
-    ND -.->|monitors| SF
-    ND -.->|monitors| YF
-    ND -.->|monitors| SNF
-    ND -.->|monitors| EF
-    ND -.->|monitors| TI
-    ND -.->|monitors| SR
-    ND -.->|monitors| DP
-    ND -.->|monitors| IC
+    ND -->|monitors| SF
+    ND -->|monitors| YF
+    ND -->|monitors| SNF
+    ND -->|monitors| EF
+    ND -->|monitors| TI
+    ND -->|monitors| SR
+    ND -->|monitors| DP
+    ND -->|monitors| IC
 
     classDef detect     fill:#1e3a5f,stroke:#2a5a9f,color:#fff
     classDef investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
