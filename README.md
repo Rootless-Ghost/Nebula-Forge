@@ -49,6 +49,7 @@ flowchart LR
 
     SF -->|Wazuh XML rules| DV
     EF -->|Live telemetry| DV
+    EF -->|Run Full Triage| ET
     DV -->|Detection gap| SF
 
     TI -->|Enriched IOCs| DP
