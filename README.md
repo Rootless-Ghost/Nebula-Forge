@@ -45,12 +45,12 @@ flowchart LR
 
     ND[nebula-dashboard\nCentral hub]
 
-    Detect --> Investigate --> Respond --> Report
-
     SF -->|Wazuh XML rules| DV
     EF -->|Live telemetry| DV
     EF -->|Run Full Triage| ET
     DV -->|Detection gap| SF
+    ET --> IR
+    IR --> SR
 
     TI -->|Enriched IOCs| DP
     DP -->|Sigma rules| SF
