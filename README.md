@@ -12,6 +12,10 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 ---
 
+## Dashboard
+
+![Nebula Forge Dashboard](docs/Nebula_Forge-Dashboard.png)
+
 ## The pipeline
 
 ```mermaid
