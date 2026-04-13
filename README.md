@@ -39,7 +39,7 @@ graph LR
         HF[HuntForge]
     end
 
-    subgraph VALIDATE[Validate]
+    subgraph VALIDATE[Detection Suite v2]
         DW[DriftWatch]
         CQ[ClusterIQ]
         AL[AtomicLoop]
@@ -68,7 +68,16 @@ graph LR
     DS --> LN
     DS --> SF
     DS --> DW
+    EF -.->|telemetry| LN
     SF -.->|monitors| ND
+    YF -.->|monitors| ND
+    SNF -.->|monitors| ND
+    EF -.->|monitors| ND
+    LN -.->|monitors| ND
+    HF -.->|monitors| ND
+    AL -.->|monitors| ND
+    CQ -.->|monitors| ND
+    TI -.->|monitors| ND
     DW -.->|monitors| ND
     IC -.->|monitors| ND
     DP -.->|monitors| ND
