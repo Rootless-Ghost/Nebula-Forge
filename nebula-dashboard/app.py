@@ -112,6 +112,13 @@ _DEFAULTS = {
             "description": "Contextual alert clustering engine",
             "category":    "Detection",
         },
+        "atomicloop": {
+            "label":       "AtomicLoop",
+            "url":         "http://127.0.0.1:5011",
+            "health_path": "/api/health",
+            "description": "Atomic Red Team test runner and detection validator",
+            "category":    "Detection",
+        },
     },
     "pipelines": {
         "ir_chain": {
@@ -127,6 +134,13 @@ _DEFAULTS = {
             "description": "IOC → Threat Intel → Sigma / YARA / Snort",
             "output_dir":  "../detection-pipeline/output",
             "max_recent":  5,
+        },
+        "purple_loop": {
+            "label":       "purple-loop",
+            "description": "AtomicLoop → LogNorm → DriftWatch → Sigma validation",
+            "atomicloop_url":  "http://127.0.0.1:5011",
+            "lognorm_url":     "http://127.0.0.1:5006",
+            "driftwatch_url":  "http://127.0.0.1:5008",
         },
     },
     "health_timeout": 3,
