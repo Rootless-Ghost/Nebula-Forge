@@ -1,227 +1,192 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600">
   <defs>
-    <marker id="arr-green"  markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#3fb950"/></marker>
-    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f0883e"/></marker>
-    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#bc8cff"/></marker>
-    <marker id="arr-teal"   markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#39c5bb"/></marker>
-    <marker id="arr-blue"   markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/></marker>
+    <marker id="arr-green"  markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#3fb950"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#bc8cff"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#f0883e"/>
+    </marker>
+    <marker id="arr-blue"   markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/>
+    </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="1200" height="700" fill="#0d1117"/>
+  <rect width="1100" height="600" fill="#0d1117"/>
 
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- SUBGRAPH BOXES                                     -->
-  <!-- ══════════════════════════════════════════════════ -->
+  <!-- Section separators -->
+  <line x1="20" y1="190" x2="1080" y2="190" stroke="#21262d" stroke-width="1"/>
+  <line x1="20" y1="328" x2="1080" y2="328" stroke="#21262d" stroke-width="1"/>
+  <line x1="20" y1="406" x2="1080" y2="406" stroke="#21262d" stroke-width="1"/>
+  <line x1="20" y1="477" x2="1080" y2="477" stroke="#21262d" stroke-width="1"/>
 
-  <!-- Detection Pipelines: x=20 y=80 w=180 h=320 -->
-  <rect x="20"  y="80"  width="180" height="320" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
-  <text x="110" y="97"  text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Detection Pipelines</text>
+  <!-- Section headers -->
+  <text x="20" y="68"  font-family="monospace" font-size="11" font-weight="bold" fill="#58a6ff">Detection Pipeline</text>
+  <text x="20" y="214" font-family="monospace" font-size="11" font-weight="bold" fill="#bc8cff">Purple Team Pipeline</text>
+  <text x="20" y="350" font-family="monospace" font-size="11" font-weight="bold" fill="#f0883e">Incident Response</text>
 
-  <!-- Detection Tools: x=240 y=60 w=200 h=420 -->
-  <rect x="240" y="60"  width="200" height="420" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
-  <text x="340" y="77"  text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Detection Tools</text>
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PIPELINE 1 — DETECTION                                -->
+  <!-- Row A  cy=90:  Threat Intel → det-pipeline → SigmaForge → DriftWatch -->
+  <!-- Row B  cy=155: LogNorm → ClusterIQ  (fed by SigmaForge ↓)            -->
+  <!-- ══════════════════════════════════════════════════════ -->
 
-  <!-- Detection Suite v2: x=480 y=60 w=200 h=280 -->
-  <rect x="480" y="60"  width="200" height="280" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
-  <text x="580" y="77"  text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Detection Suite v2</text>
+  <!-- Row A edges (green data flow) -->
+  <line x1="139" y1="90" x2="176" y2="90" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="284" y1="90" x2="321" y2="90" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="429" y1="90" x2="466" y2="90" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
 
-  <!-- Incident Response: x=480 y=380 w=200 h=220 -->
-  <rect x="480" y="380" width="200" height="220" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
-  <text x="580" y="397" text-anchor="middle" font-family="monospace" font-size="10" fill="#8b949e">Incident Response</text>
+  <!-- Row A nodes -->
+  <rect x="31"  y="74" width="108" height="32" rx="6" fill="#1e4a4a" stroke="#2a6a6a" stroke-width="1.5"/>
+  <text x="85"  y="94" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">Threat Intel</text>
 
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- EDGES  (drawn first so nodes sit on top)           -->
-  <!-- ══════════════════════════════════════════════════ -->
+  <rect x="176" y="74" width="108" height="32" rx="6" fill="#1e4a4a" stroke="#2a7a7a" stroke-width="1.5"/>
+  <text x="230" y="94" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">det-pipeline</text>
 
-  <!-- ── DATA FLOW  #3fb950 solid ── -->
+  <rect x="321" y="74" width="108" height="32" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
+  <text x="375" y="94" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">SigmaForge</text>
 
-  <!-- Threat Intel → det-pipeline  (vertical, within PIPES) -->
-  <path d="M 110,147 L 110,173" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="466" y="74" width="108" height="32" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
+  <text x="520" y="94" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">DriftWatch</text>
 
-  <!-- det-pipeline → SigmaForge -->
-  <path d="M 170,190 C 222,190 222,120 280,120" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <text x="585" y="94" font-family="monospace" font-size="10" fill="#484f58">→ gap found</text>
 
-  <!-- SigmaForge → DriftWatch -->
-  <path d="M 400,120 C 458,120 458,130 520,130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <!-- Vertical SigmaForge ↓ LogNorm -->
+  <line x1="375" y1="106" x2="375" y2="139" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
 
-  <!-- LogNorm → DriftWatch  (up-right across gap) -->
-  <path d="M 400,360 C 440,360 440,50 520,130" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <!-- Row B edge -->
+  <line x1="429" y1="155" x2="466" y2="155" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
 
-  <!-- LogNorm → ClusterIQ -->
-  <path d="M 400,360 C 458,360 458,210 520,210" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <!-- Row B nodes -->
+  <rect x="321" y="139" width="108" height="32" rx="6" fill="#1e3a2a" stroke="#2a7a4a" stroke-width="1.5"/>
+  <text x="375" y="159" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">LogNorm</text>
 
-  <!-- HuntForge → AtomicLoop -->
-  <path d="M 400,420 C 458,420 458,290 520,290" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="466" y="139" width="108" height="32" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
+  <text x="520" y="159" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">ClusterIQ</text>
 
-  <!-- AtomicLoop → DriftWatch  (upward within VALIDATE, curves left) -->
-  <path d="M 580,273 C 556,232 556,160 580,147" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
+  <text x="585" y="159" font-family="monospace" font-size="10" fill="#484f58">→ alert clustered</text>
 
-  <!-- ── IR CHAIN  #f0883e solid ── -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PIPELINE 2 — PURPLE TEAM                              -->
+  <!-- Row A  cy=232: HuntForge → AtomicLoop → DriftWatch    -->
+  <!-- Row B  cy=296: drift-scan → LogNorm  (↑ into AL)      -->
+  <!-- ══════════════════════════════════════════════════════ -->
 
-  <!-- EndpointTriage → ir-chain -->
-  <path d="M 580,447 L 580,483" stroke="#f0883e" stroke-width="2" fill="none" marker-end="url(#arr-orange)"/>
+  <!-- Row A edges (green data flow) -->
+  <line x1="139" y1="232" x2="176" y2="232" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
+  <line x1="284" y1="232" x2="321" y2="232" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)"/>
 
-  <!-- ir-chain → SIREN -->
-  <path d="M 580,517 L 580,553" stroke="#f0883e" stroke-width="2" fill="none" marker-end="url(#arr-orange)"/>
+  <!-- Row A nodes -->
+  <rect x="31"  y="216" width="108" height="32" rx="6" fill="#2a1e5f" stroke="#4a2a9f" stroke-width="1.5"/>
+  <text x="85"  y="236" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">HuntForge</text>
 
-  <!-- ── PIPELINE CALLS  #bc8cff solid ── -->
+  <rect x="176" y="216" width="108" height="32" rx="6" fill="#5f1e3a" stroke="#9f2a5a" stroke-width="1.5"/>
+  <text x="230" y="236" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">AtomicLoop</text>
 
-  <!-- det-pipeline → SigmaForge also carries this color; det-pipeline is data flow above.
-       The pipeline calls are: PL→HF, PL→AL, PL→DW, DS→LN, DS→SF, DS→DW -->
+  <rect x="321" y="216" width="108" height="32" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
+  <text x="375" y="236" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">DriftWatch</text>
 
-  <!-- purple-loop → HuntForge -->
-  <path d="M 170,310 C 222,310 222,420 280,420" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <text x="440" y="236" font-family="monospace" font-size="10" fill="#484f58">→ detection validated</text>
 
-  <!-- purple-loop → AtomicLoop  (long, across Tools gap) -->
-  <path d="M 170,310 C 170,500 520,500 520,290" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <!-- Row B edges (purple pipeline calls) -->
+  <line x1="139" y1="296" x2="176" y2="296" stroke="#bc8cff" stroke-width="2" marker-end="url(#arr-purple)"/>
 
-  <!-- purple-loop → DriftWatch  (arc over all boxes) -->
-  <path d="M 110,293 C 110,-20 520,-20 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <!-- LogNorm ↑ AtomicLoop (pipeline call) -->
+  <line x1="230" y1="280" x2="230" y2="248" stroke="#bc8cff" stroke-width="2" marker-end="url(#arr-purple)"/>
 
-  <!-- drift-scan → LogNorm -->
-  <path d="M 170,250 C 200,300 240,360 280,360" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <!-- Row B nodes -->
+  <rect x="31"  y="280" width="108" height="32" rx="6" fill="#1e4a4a" stroke="#2a7a7a" stroke-width="1.5"/>
+  <text x="85"  y="300" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">drift-scan</text>
 
-  <!-- drift-scan → SigmaForge -->
-  <path d="M 170,250 C 200,200 240,120 280,120" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="176" y="280" width="108" height="32" rx="6" fill="#1e3a2a" stroke="#2a7a4a" stroke-width="1.5"/>
+  <text x="230" y="300" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">LogNorm</text>
 
-  <!-- drift-scan → DriftWatch  (arc over boxes) -->
-  <path d="M 170,237 C 170,-10 520,-10 520,130" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#arr-purple)"/>
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PIPELINE 3 — INCIDENT RESPONSE                        -->
+  <!-- EndpointTriage → ir-chain → SIREN                     -->
+  <!-- ══════════════════════════════════════════════════════ -->
 
-  <!-- ── TELEMETRY  #39c5bb solid ── -->
+  <!-- Edges (orange IR chain) -->
+  <line x1="139" y1="372" x2="186" y2="372" stroke="#f0883e" stroke-width="2" marker-end="url(#arr-orange)"/>
+  <line x1="294" y1="372" x2="341" y2="372" stroke="#f0883e" stroke-width="2" marker-end="url(#arr-orange)"/>
 
-  <!-- EndpointForge → LogNorm  (vertical, within Tools) -->
-  <path d="M 340,317 L 340,343" stroke="#39c5bb" stroke-width="2" fill="none" marker-end="url(#arr-teal)"/>
+  <!-- Nodes -->
+  <rect x="31"  y="356" width="108" height="32" rx="6" fill="#3a1e5f" stroke="#5a2a9f" stroke-width="1.5"/>
+  <text x="85"  y="376" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">EndpointTriage</text>
 
-  <!-- ── MONITORS  #58a6ff dotted  (fan into ND left edge x=780) ── -->
+  <rect x="186" y="356" width="108" height="32" rx="6" fill="#5f1e1e" stroke="#9f2a2a" stroke-width="1.5"/>
+  <text x="240" y="376" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">ir-chain</text>
 
-  <!-- SigmaForge → ND -->
-  <path d="M 400,120 C 596,120 696,258 780,258" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- YaraForge → ND -->
-  <path d="M 400,180 C 596,180 696,274 780,274" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- SnortForge → ND -->
-  <path d="M 400,240 C 596,240 696,290 780,290" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- EndpointForge → ND -->
-  <path d="M 400,300 C 596,300 696,306 780,306" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- LogNorm → ND -->
-  <path d="M 400,360 C 596,360 696,322 780,322" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- HuntForge → ND -->
-  <path d="M 400,420 C 596,420 696,338 780,338" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- DriftWatch → ND -->
-  <path d="M 640,130 C 712,130 752,354 780,354" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- ClusterIQ → ND -->
-  <path d="M 640,210 C 712,210 752,370 780,370" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- AtomicLoop → ND -->
-  <path d="M 640,290 C 712,290 752,386 780,386" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
-  <!-- SIREN → ND -->
-  <path d="M 640,570 C 720,570 756,402 780,402" stroke="#58a6ff" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-blue)" opacity="0.75"/>
+  <rect x="341" y="356" width="108" height="32" rx="6" fill="#1e5f3a" stroke="#2a9f5a" stroke-width="1.5"/>
+  <text x="395" y="376" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">SIREN</text>
 
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- NODES                                              -->
-  <!-- (cx, cy listed; rect x=cx-60 y=cy-17 w=120 h=34) -->
-  <!-- ══════════════════════════════════════════════════ -->
+  <text x="460" y="376" font-family="monospace" font-size="10" fill="#484f58">→ report generated</text>
 
-  <!-- Detection Pipelines nodes — pipeline #1e4a4a / #2a7a7a, intel #1e4a4a / #2a6a6a -->
-  <!-- Threat Intel  cx=110 cy=130 -->
-  <rect x="50"  y="113" width="120" height="34" rx="6" fill="#1e4a4a" stroke="#2a6a6a" stroke-width="1.5"/>
-  <text x="110" y="134" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">Threat Intel</text>
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- DASHBOARD MONITORING ROW                              -->
+  <!-- nebula-dashboard (gold) + monitored tool nodes        -->
+  <!-- ══════════════════════════════════════════════════════ -->
 
-  <!-- det-pipeline  cx=110 cy=190 -->
-  <rect x="50"  y="173" width="120" height="34" rx="6" fill="#1e4a4a" stroke="#2a7a7a" stroke-width="1.5"/>
-  <text x="110" y="194" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">det-pipeline</text>
+  <!-- Monitor bus line -->
+  <line x1="140" y1="444" x2="1007" y2="444" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.45"/>
 
-  <!-- drift-scan  cx=110 cy=250 -->
-  <rect x="50"  y="233" width="120" height="34" rx="6" fill="#1e4a4a" stroke="#2a7a7a" stroke-width="1.5"/>
-  <text x="110" y="254" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">drift-scan</text>
+  <!-- Hub node -->
+  <rect x="10"  y="431" width="130" height="26" rx="6" fill="#5f4a1e" stroke="#9f7a2a" stroke-width="2"/>
+  <text x="75"  y="448" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="#ffffff">nebula-dashboard</text>
 
-  <!-- purple-loop  cx=110 cy=310 -->
-  <rect x="50"  y="293" width="120" height="34" rx="6" fill="#1e4a4a" stroke="#2a7a7a" stroke-width="1.5"/>
-  <text x="110" y="314" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">purple-loop</text>
+  <!-- Monitored nodes (78×26, gap=8, cy=444) -->
+  <rect x="155" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="194" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">SigmaForge</text>
 
-  <!-- Detection Tools nodes -->
-  <!-- SigmaForge  cx=340 cy=120 — detect #1e3a5f / #2a5a9f -->
-  <rect x="280" y="103" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="340" y="124" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">SigmaForge</text>
+  <rect x="241" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="280" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">YaraForge</text>
 
-  <!-- YaraForge  cx=340 cy=180 -->
-  <rect x="280" y="163" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="340" y="184" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">YaraForge</text>
+  <rect x="327" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="366" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">SnortForge</text>
 
-  <!-- SnortForge  cx=340 cy=240 -->
-  <rect x="280" y="223" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="340" y="244" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">SnortForge</text>
+  <rect x="413" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="452" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">EndpointForge</text>
 
-  <!-- EndpointForge  cx=340 cy=300 -->
-  <rect x="280" y="283" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="340" y="304" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">EndpointForge</text>
+  <rect x="499" y="431" width="78" height="26" rx="5" fill="#1e3a2a" stroke="#2a7a4a" stroke-width="1"/>
+  <text x="538" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">LogNorm</text>
 
-  <!-- LogNorm  cx=340 cy=360 — normalize #1e3a2a / #2a7a4a -->
-  <rect x="280" y="343" width="120" height="34" rx="6" fill="#1e3a2a" stroke="#2a7a4a" stroke-width="1.5"/>
-  <text x="340" y="364" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">LogNorm</text>
+  <rect x="585" y="431" width="78" height="26" rx="5" fill="#2a1e5f" stroke="#4a2a9f" stroke-width="1"/>
+  <text x="624" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">HuntForge</text>
 
-  <!-- HuntForge  cx=340 cy=420 — hunt #2a1e5f / #4a2a9f -->
-  <rect x="280" y="403" width="120" height="34" rx="6" fill="#2a1e5f" stroke="#4a2a9f" stroke-width="1.5"/>
-  <text x="340" y="424" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">HuntForge</text>
+  <rect x="671" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="710" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">DriftWatch</text>
 
-  <!-- Detection Suite v2 nodes -->
-  <!-- DriftWatch  cx=580 cy=130 — detect -->
-  <rect x="520" y="113" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="580" y="134" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">DriftWatch</text>
+  <rect x="757" y="431" width="78" height="26" rx="5" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1"/>
+  <text x="796" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">ClusterIQ</text>
 
-  <!-- ClusterIQ  cx=580 cy=210 — detect -->
-  <rect x="520" y="193" width="120" height="34" rx="6" fill="#1e3a5f" stroke="#2a5a9f" stroke-width="1.5"/>
-  <text x="580" y="214" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">ClusterIQ</text>
+  <rect x="843" y="431" width="78" height="26" rx="5" fill="#5f1e3a" stroke="#9f2a5a" stroke-width="1"/>
+  <text x="882" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">AtomicLoop</text>
 
-  <!-- AtomicLoop  cx=580 cy=290 — atomicloop #5f1e3a / #9f2a5a -->
-  <rect x="520" y="273" width="120" height="34" rx="6" fill="#5f1e3a" stroke="#9f2a5a" stroke-width="1.5"/>
-  <text x="580" y="294" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">AtomicLoop</text>
+  <rect x="929" y="431" width="78" height="26" rx="5" fill="#1e5f3a" stroke="#2a9f5a" stroke-width="1"/>
+  <text x="968" y="448" text-anchor="middle" font-family="monospace" font-size="9" fill="#ffffff">SIREN</text>
 
-  <!-- Incident Response nodes -->
-  <!-- EndpointTriage  cx=580 cy=430 — investigate #3a1e5f / #5a2a9f -->
-  <rect x="520" y="413" width="120" height="34" rx="6" fill="#3a1e5f" stroke="#5a2a9f" stroke-width="1.5"/>
-  <text x="580" y="434" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">EndpointTriage</text>
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- LEGEND                                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <rect x="20" y="500" width="1060" height="40" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
 
-  <!-- ir-chain  cx=580 cy=500 — respond #5f1e1e / #9f2a2a -->
-  <rect x="520" y="483" width="120" height="34" rx="6" fill="#5f1e1e" stroke="#9f2a2a" stroke-width="1.5"/>
-  <text x="580" y="504" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">ir-chain</text>
+  <line x1="50"  y1="520" x2="87"  y2="520" stroke="#3fb950" stroke-width="2"/>
+  <polygon points="87,516.5 97,520 87,523.5" fill="#3fb950"/>
+  <text x="103" y="524" font-family="monospace" font-size="10" fill="#8b949e">data flow</text>
 
-  <!-- SIREN  cx=580 cy=570 — report #1e5f3a / #2a9f5a -->
-  <rect x="520" y="553" width="120" height="34" rx="6" fill="#1e5f3a" stroke="#2a9f5a" stroke-width="1.5"/>
-  <text x="580" y="574" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff">SIREN</text>
+  <line x1="280" y1="520" x2="317" y2="520" stroke="#bc8cff" stroke-width="2"/>
+  <polygon points="317,516.5 327,520 317,523.5" fill="#bc8cff"/>
+  <text x="333" y="524" font-family="monospace" font-size="10" fill="#8b949e">pipeline calls</text>
 
-  <!-- Nebula Dashboard — hub gold, x=780 y=240 w=160 h=60 (cx=860 cy=270) -->
-  <rect x="780" y="240" width="160" height="60" rx="10" fill="#5f4a1e" stroke="#9f7a2a" stroke-width="2"/>
-  <text x="860" y="263" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#ffffff">Nebula</text>
-  <text x="860" y="282" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#ffffff">Dashboard</text>
+  <line x1="530" y1="520" x2="567" y2="520" stroke="#f0883e" stroke-width="2"/>
+  <polygon points="567,516.5 577,520 567,523.5" fill="#f0883e"/>
+  <text x="583" y="524" font-family="monospace" font-size="10" fill="#8b949e">IR chain</text>
 
-  <!-- ══════════════════════════════════════════════════ -->
-  <!-- LEGEND  y=625 h=50                                 -->
-  <!-- ══════════════════════════════════════════════════ -->
-  <rect x="20" y="625" width="1160" height="50" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-
-  <!-- monitors (blue dotted) -->
-  <line x1="38"  y1="650" x2="75"  y2="650" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="5,4"/>
-  <polygon points="75,646.5 85,650 75,653.5" fill="#58a6ff"/>
-  <text x="92"  y="654" font-family="monospace" font-size="10" fill="#8b949e">monitors</text>
-
-  <!-- data flow (green solid) -->
-  <line x1="250" y1="650" x2="287" y2="650" stroke="#3fb950" stroke-width="2"/>
-  <polygon points="287,646.5 297,650 287,653.5" fill="#3fb950"/>
-  <text x="304" y="654" font-family="monospace" font-size="10" fill="#8b949e">data flow</text>
-
-  <!-- pipeline calls (purple solid) -->
-  <line x1="460" y1="650" x2="497" y2="650" stroke="#bc8cff" stroke-width="2"/>
-  <polygon points="497,646.5 507,650 497,653.5" fill="#bc8cff"/>
-  <text x="514" y="654" font-family="monospace" font-size="10" fill="#8b949e">pipeline calls</text>
-
-  <!-- IR chain (orange solid) -->
-  <line x1="680" y1="650" x2="717" y2="650" stroke="#f0883e" stroke-width="2"/>
-  <polygon points="717,646.5 727,650 717,653.5" fill="#f0883e"/>
-  <text x="734" y="654" font-family="monospace" font-size="10" fill="#8b949e">IR chain</text>
-
-  <!-- telemetry (teal solid) -->
-  <line x1="870" y1="650" x2="907" y2="650" stroke="#39c5bb" stroke-width="2"/>
-  <polygon points="907,646.5 917,650 907,653.5" fill="#39c5bb"/>
-  <text x="924" y="654" font-family="monospace" font-size="10" fill="#8b949e">telemetry</text>
+  <line x1="750" y1="520" x2="787" y2="520" stroke="#58a6ff" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <polygon points="787,516.5 797,520 787,523.5" fill="#58a6ff"/>
+  <text x="803" y="524" font-family="monospace" font-size="10" fill="#8b949e">monitors</text>
 
 </svg>
