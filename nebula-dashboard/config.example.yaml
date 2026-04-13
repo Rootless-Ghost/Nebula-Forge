@@ -66,6 +66,13 @@ tools:
     description: "Endpoint detection rule builder"
     category:    "Detection"
 
+  lognorm:
+    label:       "LogNorm"
+    url:         "http://127.0.0.1:5006"
+    health_path: "/api/health"
+    description: "Log source normalizer — Sysmon / WEL / Wazuh / syslog / CEF → ECS-lite"
+    category:    "Normalize"
+
 # -----------------------------------------------------------------------
 # Pipeline panels
 # ir_chain:
