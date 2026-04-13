@@ -91,6 +91,20 @@ _DEFAULTS = {
             "description": "Log source normalizer — Sysmon / WEL / Wazuh / syslog / CEF → ECS-lite",
             "category":    "Normalize",
         },
+        "huntforge": {
+            "label":       "HuntForge",
+            "url":         "http://127.0.0.1:5007",
+            "health_path": "/api/health",
+            "description": "MITRE ATT&CK threat hunt playbook generator",
+            "category":    "Detection",
+        },
+        "driftwatch": {
+            "label":       "DriftWatch",
+            "url":         "http://127.0.0.1:5008",
+            "health_path": "/api/health",
+            "description": "Detection drift analyzer for Sigma rules",
+            "category":    "Detection",
+        },
     },
     "pipelines": {
         "ir_chain": {
