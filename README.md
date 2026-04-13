@@ -14,7 +14,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 ## Dashboard
 
-> 6/6 tools online — live status, pipeline activity, and incident report viewer.
+> 11/11 tools online — live status, pipeline activity, and incident report viewer.
 
 ![Nebula Forge Dashboard](docs/Nebula_Forge-Dashboard.png)
 
@@ -28,6 +28,20 @@ flowchart LR
         YF[YaraForge\nFile-based signatures]
         SNF[SnortForge\nNetwork signatures]
         EF[EndpointForge\nRuntime telemetry]
+        DW[DriftWatch\nRule drift analysis]
+        CQ[ClusterIQ\nAlert clustering]
+    end
+
+    subgraph Normalize
+        LN[LogNorm\nECS-lite normalizer]
+    end
+
+    subgraph Hunt
+        HF[HuntForge\nPlaybook generator]
+    end
+
+    subgraph PurpleTeam
+        AL[AtomicLoop\nAtomic test runner]
     end
 
     subgraph Investigate
@@ -47,6 +61,8 @@ flowchart LR
         TI[Threat Intel Dashboard\nIOC enrichment]
         DP[detection-pipeline\nIOC → rules]
         IC[ir-chain\nAutomated IR]
+        DS[drift-scan\nLog → gap analysis]
+        PL[purple-loop\nHunt → execute → validate]
     end
 
     ND[nebula-dashboard\nCentral hub]
@@ -67,40 +83,58 @@ flowchart LR
     ET -->|Log analysis| IC
     IC -->|Incident payload| SR
 
+    LN -->|ECS-lite events| DW
+    LN -->|ECS-lite events| CQ
+    SF -->|Sigma rules| DW
+    HF -->|Playbook + Sigma| AL
+    AL -->|ECS-lite events| DW
+
+    DS -->|uses| LN
+    DS -->|fetches rules| SF
+    DS -->|drift report| DW
+    PL -->|playbook| HF
+    PL -->|execute| AL
+    PL -->|validate| DW
+
     ND -->|monitors| SF
     ND -->|monitors| YF
     ND -->|monitors| SNF
     ND -->|monitors| EF
     ND -->|monitors| TI
     ND -->|monitors| SR
-    ND -->|monitors| DP
-    ND -->|monitors| IC
+    ND -->|monitors| LN
+    ND -->|monitors| HF
+    ND -->|monitors| DW
+    ND -->|monitors| CQ
+    ND -->|monitors| AL
 
     classDef detect     fill:#1e3a5f,stroke:#2a5a9f,color:#fff
+    classDef normalize  fill:#1e3a2a,stroke:#2a7a4a,color:#fff
+    classDef hunt       fill:#2a1e5f,stroke:#4a2a9f,color:#fff
+    classDef purple     fill:#5f1e3a,stroke:#9f2a5a,color:#fff
     classDef investigate fill:#3a1e5f,stroke:#5a2a9f,color:#fff
     classDef respond    fill:#5f1e1e,stroke:#9f2a2a,color:#fff
     classDef report     fill:#1e5f3a,stroke:#2a9f5a,color:#fff
     classDef pipeline   fill:#1e4a4a,stroke:#2a7a7a,color:#fff
     classDef hub        fill:#5f4a1e,stroke:#9f7a2a,color:#fff
 
-    class SF,YF,SNF,EF detect
+    class SF,YF,SNF,EF,DW,CQ detect
+    class LN normalize
+    class HF hunt
+    class AL purple
     class ET,DV investigate
     class IR respond
     class SR report
-    class TI,DP,IC pipeline
+    class TI,DP,IC,DS,PL pipeline
     class ND hub
-
-    linkStyle 0,1,2 stroke:#bc8cff,stroke-width:2px
-    linkStyle 3 stroke:#f0883e,stroke-width:2px
-    linkStyle 7,8,9 stroke:#58a6ff,stroke-width:2px
-    linkStyle 10,11,12 stroke:#39c5bb,stroke-width:2px
-    linkStyle 13,14,15,16,17,18,19,20 stroke:#6e7681,stroke-width:1px
 
 ```
 
 ---
 
 ## Tools
+
+### Detection Suite v1
 
 | Tool | Purpose | Phase | Stack |
 |------|---------|-------|-------|
@@ -118,6 +152,25 @@ flowchart LR
 | [Threat Intel Dashboard](./threat-intel-dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
 | [Security Awareness Training](./security-awareness-training-main) | Multi-user web app with training modules, quizzes (70% pass threshold), phishing simulation scenarios with red-flag walkthroughs, and an admin dashboard for tracking user progress | Training | Flask, Python |
 
+### Detection Suite v2
+
+| Tool | Purpose | Phase | Stack |
+|------|---------|-------|-------|
+| [LogNorm](../LogNorm) | Log source normalizer — maps Sysmon, Windows Event Log, Wazuh, syslog, and CEF events to a shared ECS-lite schema; used as the data contract between v2 tools | Normalize | Flask, Python, SQLite |
+| [HuntForge](../HuntForge) | MITRE ATT&CK threat hunt playbook generator — T-code to hypothesis, KQL/SPL queries, expected artifacts, and confidence score | Hunt | Flask, Python, SQLite |
+| [DriftWatch](../DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
+| [ClusterIQ](../ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
+| [AtomicLoop](../AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls | Purple Team | Flask, Python, SQLite |
+
+### Pipelines
+
+| Pipeline | Purpose | Phase | Stack |
+|----------|---------|-------|-------|
+| [ir-chain](./ir-chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
+| [detection-pipeline](./detection-pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
+| [drift-scan](./pipelines/drift-scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
+| [purple-loop](./pipelines/purple-loop) | HuntForge → AtomicLoop → DriftWatch — generate hunt playbook, execute atomic technique, validate detection fired; full purple team validation in one command | Purple Team | Python, CLI |
+
 ---
 
 ## Architecture
@@ -130,6 +183,25 @@ Every tool in Nebula Forge shares the same foundation:
 - **Wazuh integration** where applicable — decoders, rules, and exporters
 
 The SigmaForge ↔ EndpointForge cross-link uses a custom Sigma conversion engine — no pySigma dependency, which has no native Wazuh backend. Rules generated by SigmaForge are valid Wazuh XML out of the box.
+
+### ECS-lite shared schema (v2 data contract)
+
+The Detection Suite v2 tools communicate over a shared **ECS-lite** event schema — a lightweight subset of the Elastic Common Schema. LogNorm is the normalizer: it accepts raw Sysmon, Windows Event Log, Wazuh, syslog, and CEF events and emits ECS-lite JSON. Every downstream v2 tool (DriftWatch, ClusterIQ, AtomicLoop) consumes this format, so a log event normalized once is usable everywhere.
+
+Key fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `@timestamp` | ISO 8601 | Event time |
+| `event.code` | string | Windows Event ID or equivalent |
+| `event.action` | string | Human-readable action label |
+| `event.category` | string | process / network / file / registry / authentication |
+| `log.name` | string | Source log channel (e.g. `Microsoft-Windows-Sysmon/Operational`) |
+| `host.name` | string | Originating hostname |
+| `process.name` | string | Process image name (where applicable) |
+| `process.command_line` | string | Full command line (where applicable) |
+
+This schema is the handoff point between AtomicLoop (event capture), LogNorm (normalization), DriftWatch (Sigma validation), and ClusterIQ (alert clustering) — and is the reason the purple-loop and drift-scan pipelines require no shared database.
 
 ---
 
