@@ -84,6 +84,12 @@ flowchart LR
     class TI,DP,IC pipeline
     class ND hub
 
+    linkStyle 0,1,2 stroke:#bc8cff,stroke-width:2px
+    linkStyle 3 stroke:#f0883e,stroke-width:2px
+    linkStyle 7,8,9 stroke:#58a6ff,stroke-width:2px
+    linkStyle 10,11,12 stroke:#39c5bb,stroke-width:2px
+    linkStyle 13,14,15,16,17,18,19,20 stroke:#6e7681,stroke-width:1px
+
 ```
 
 ---
