@@ -14,6 +14,8 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 ## Dashboard
 
+> 6/6 tools online — live status, pipeline activity, and incident report viewer.
+
 ![Nebula Forge Dashboard](docs/Nebula_Forge-Dashboard.png)
 
 ## The pipeline
