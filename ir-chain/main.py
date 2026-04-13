@@ -64,6 +64,9 @@ DEFAULT_CONFIG = {
 }
 
 
+_RELATIVE_PATH_KEYS = ("triage_output_path", "log_analyzer_script", "output_dir")
+
+
 def load_config(path: str) -> dict:
     config = dict(DEFAULT_CONFIG)
     if not os.path.exists(path):
@@ -76,6 +79,18 @@ def load_config(path: str) -> dict:
         logger.info("Loaded config from %s", path)
     except Exception as exc:
         logger.error("Failed to load config: %s — using defaults", exc)
+        return config
+
+    # Resolve relative paths against the config file's directory so that
+    # paths like "../EndpointTriage/TriageOutput" work regardless of where
+    # main.py is invoked from.
+    config_dir = os.path.dirname(os.path.abspath(path))
+    for key in _RELATIVE_PATH_KEYS:
+        value = config.get(key)
+        if value and not os.path.isabs(value):
+            config[key] = os.path.normpath(os.path.join(config_dir, value))
+            logger.debug("Resolved %s: %s", key, config[key])
+
     return config
 
 
