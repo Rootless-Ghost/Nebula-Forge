@@ -151,4 +151,11 @@ PSAA → PSAP → Sec+ → CCDL1 → PAPA → PJPT + PNPT
 
 ---
 
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+
+<div align="center">
+
 *Nebula Forge — detection engineering tooling that works in the real world.*
