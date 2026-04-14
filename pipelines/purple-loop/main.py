@@ -49,6 +49,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger("purple-loop")
 
+# Read once at startup; used to authenticate requests to AtomicLoop /api/run
+# and /api/validate.  Missing key is non-fatal: those routes do not require
+# auth, but the absence is logged so operators know to set it before enabling
+# /execute auth on the AtomicLoop server.
+_ATOMICLOOP_API_KEY: str = os.environ.get("ATOMICLOOP_API_KEY", "")
+if not _ATOMICLOOP_API_KEY:
+    logger.warning(
+        "ATOMICLOOP_API_KEY is not set — requests to AtomicLoop will be sent "
+        "without an X-API-Key header. Set this env var if AtomicLoop auth is enabled."
+    )
+
 # ---------------------------------------------------------------------------
 # Defaults
 # ---------------------------------------------------------------------------
@@ -66,12 +77,15 @@ _DEFAULTS = {
 # HTTP helpers
 # ---------------------------------------------------------------------------
 
-def _post(url: str, payload: dict, timeout: int) -> dict:
+def _post(url: str, payload: dict, timeout: int, extra_headers: dict | None = None) -> dict:
     data = json.dumps(payload).encode()
+    headers = {"Content-Type": "application/json"}
+    if extra_headers:
+        headers.update(extra_headers)
     req = urllib.request.Request(
         url,
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -155,8 +169,9 @@ def run_atomic_test(
         "AtomicLoop [%s] executing %s test #%d…",
         mode_label, technique_id, test_number,
     )
+    atomicloop_headers = {"X-API-Key": _ATOMICLOOP_API_KEY} if _ATOMICLOOP_API_KEY else None
     try:
-        result = _post(url, payload, http_timeout)
+        result = _post(url, payload, http_timeout, extra_headers=atomicloop_headers)
         if result.get("success"):
             logger.info(
                 "AtomicLoop run complete: exit_code=%s, events=%d, run_id=%s",
@@ -192,11 +207,14 @@ def validate_with_driftwatch(
     Falls back to DriftWatch /api/validate directly if run_id is not available.
     Returns validation result dict, or None on failure.
     """
+    extra_headers = None
     if run_id:
         # Use AtomicLoop's validate endpoint which has the run stored
         url = f"{atomicloop_url.rstrip('/')}/api/validate"
         payload = {"run_id": run_id, "sigma_rule": sigma_rule}
         logger.info("Validating via AtomicLoop /api/validate (run_id=%s)…", run_id)
+        if _ATOMICLOOP_API_KEY:
+            extra_headers = {"X-API-Key": _ATOMICLOOP_API_KEY}
     else:
         url = driftwatch_url.rstrip("/") + "/api/validate"
         payload = {
@@ -207,7 +225,7 @@ def validate_with_driftwatch(
         logger.info("Validating directly via DriftWatch /api/validate…")
 
     try:
-        result = _post(url, payload, timeout)
+        result = _post(url, payload, timeout, extra_headers=extra_headers)
         fired  = result.get("detection_fired", False)
         count  = result.get("match_count", 0)
         logger.info("Validation result: fired=%s, matched_events=%d", fired, count)

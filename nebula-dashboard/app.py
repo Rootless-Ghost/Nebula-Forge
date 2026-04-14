@@ -36,6 +36,16 @@ logging.basicConfig(
 )
 logger = logging.getLogger("nebula-dashboard")
 
+# Read once at startup; attached as X-API-Key on health checks to AtomicLoop.
+# Missing key is non-fatal since /api/health has no auth requirement, but
+# the absence is logged so operators know to configure it consistently.
+_ATOMICLOOP_API_KEY: str = os.environ.get("ATOMICLOOP_API_KEY", "")
+if not _ATOMICLOOP_API_KEY:
+    logger.warning(
+        "ATOMICLOOP_API_KEY is not set — AtomicLoop health checks will be sent "
+        "without an X-API-Key header."
+    )
+
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
@@ -198,8 +208,11 @@ def create_app(config_path: str = "config.yaml") -> Flask:
 
 def _check_tool(key: str, tool: dict, timeout: int) -> dict:
     url = tool["url"].rstrip("/") + tool["health_path"]
+    headers = {}
+    if key == "atomicloop" and _ATOMICLOOP_API_KEY:
+        headers["X-API-Key"] = _ATOMICLOOP_API_KEY
     try:
-        resp = requests.get(url, timeout=timeout)
+        resp = requests.get(url, timeout=timeout, headers=headers)
         online = resp.status_code < 500
         return {
             "key":         key,
