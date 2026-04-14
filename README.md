@@ -52,7 +52,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [HuntForge](https://github.com/Rootless-Ghost/HuntForge) | MITRE ATT&CK threat hunt playbook generator — T-code to hypothesis, KQL/SPL queries, expected artifacts, and confidence score | Hunt | Flask, Python, SQLite |
 | [DriftWatch](https://github.com/Rootless-Ghost/DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
 | [ClusterIQ](https://github.com/Rootless-Ghost/ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
-| [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls | Purple Team | Flask, Python, SQLite |
+| [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls; `/api/run` and `/api/validate` accept an `X-API-Key` header when server-side auth is enabled (set `ATOMICLOOP_API_KEY` env var — see Setup below) | Purple Team | Flask, Python, SQLite |
 
 ### Pipelines
 
@@ -94,6 +94,22 @@ Key fields:
 | `process.command_line` | string | Full command line (where applicable) |
 
 This schema is the handoff point between AtomicLoop (event capture), LogNorm (normalization), DriftWatch (Sigma validation), and ClusterIQ (alert clustering) — and is the reason the purple-loop and drift-scan pipelines require no shared database.
+
+---
+
+## Setup
+
+### Environment variables
+
+| Variable | Required | Used by | Description |
+|---|---|---|---|
+| `ATOMICLOOP_API_KEY` | When AtomicLoop auth is enabled | `purple-loop` pipeline | Attached as `X-API-Key` header on all requests to AtomicLoop `/api/run` and `/api/validate`. If unset, requests are sent without auth (AtomicLoop logs a warning). Must be set before running `purple-loop` against an auth-enabled AtomicLoop instance. |
+
+```bash
+# Set before running purple-loop
+export ATOMICLOOP_API_KEY="your-key-here"
+python pipelines/purple-loop/main.py --technique T1021.006 --confirm
+```
 
 ---
 
