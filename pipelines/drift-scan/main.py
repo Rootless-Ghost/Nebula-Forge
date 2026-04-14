@@ -130,8 +130,11 @@ def normalize_events(events: list, source: str, lognorm_url: str, timeout: int) 
     url = lognorm_url.rstrip("/") + "/api/normalize/batch"
     logger.info("Normalizing %d events via LogNorm (%s)…", len(events), url)
     try:
-        result = _post(url, {"events": events, "source": source}, timeout)
-        normalized = result.get("normalized", result if isinstance(result, list) else [])
+        # LogNorm /api/normalize/batch expects source_type + raw (NDJSON string)
+        # or source_type + records (list). Use raw with NDJSON for broadest adapter support.
+        raw_ndjson = "\n".join(json.dumps(e, ensure_ascii=False) for e in events)
+        result = _post(url, {"source_type": source, "raw": raw_ndjson}, timeout)
+        normalized = result.get("events", [])
         logger.info("LogNorm returned %d normalized events", len(normalized))
         return normalized
     except urllib.error.URLError as exc:

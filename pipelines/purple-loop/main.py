@@ -96,10 +96,11 @@ def get_huntforge_context(technique_id: str, huntforge_url: str, timeout: int) -
     logger.info("Requesting hunt playbook from HuntForge for %s…", technique_id)
     try:
         result = _post(url, {"technique_id": technique_id}, timeout)
+        # Sigma rule lives at result["queries"]["sigma"] in the HuntForge
+        # playbook response. Support a wrapped envelope as a fallback.
         sigma = (
-            result.get("sigma_rule")
-            or result.get("sigma")
-            or result.get("detection_rule")
+            result.get("queries", {}).get("sigma")
+            or result.get("playbook", {}).get("queries", {}).get("sigma")
         )
         if sigma and isinstance(sigma, dict):
             sigma = json.dumps(sigma)
@@ -183,6 +184,7 @@ def validate_with_driftwatch(
     sigma_rule: str,
     events: list,
     driftwatch_url: str,
+    atomicloop_url: str,
     timeout: int,
 ) -> dict | None:
     """
@@ -192,7 +194,7 @@ def validate_with_driftwatch(
     """
     if run_id:
         # Use AtomicLoop's validate endpoint which has the run stored
-        url = f"http://127.0.0.1:5011/api/validate"
+        url = f"{atomicloop_url.rstrip('/')}/api/validate"
         payload = {"run_id": run_id, "sigma_rule": sigma_rule}
         logger.info("Validating via AtomicLoop /api/validate (run_id=%s)…", run_id)
     else:
@@ -449,7 +451,7 @@ def main() -> None:
         run_id = run_result.get("run_id")
         events = run_result.get("events", [])
         validation_result = validate_with_driftwatch(
-            run_id, sigma_rule, events, cfg["driftwatch_url"], timeout
+            run_id, sigma_rule, events, cfg["driftwatch_url"], cfg["atomicloop_url"], timeout
         )
 
     # Step 4: Save report
