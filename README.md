@@ -101,9 +101,9 @@ This schema is the handoff point between AtomicLoop (event capture), LogNorm (no
 
 All tooling is validated against a live environment:
 
-- **Wazuh server** — 192.168.46.100, v4.14.4
-- **Agents** — Win11x01 (windows), SOC101-Ubuntu (linux), Kali-Purple (offensive), Nebula-C (offensive)
-- **Sysmon** — SwiftOnSecurity config deployed on Win11x01
+- **Wazuh server** — <YOUR_WAZUH_IP>, v4.14.4
+- **Agents** — Windows Agent (windows), Linux Agent (linux), Kali Agent (offensive), Offensive Agent (offensive)
+- **Sysmon** — SwiftOnSecurity config deployed on Windows Agent
 
 ---
 
