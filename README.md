@@ -48,11 +48,11 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 | Tool | Purpose | Phase | Stack |
 |------|---------|-------|-------|
-| [LogNorm](../LogNorm) | Log source normalizer — maps Sysmon, Windows Event Log, Wazuh, syslog, and CEF events to a shared ECS-lite schema; used as the data contract between v2 tools | Normalize | Flask, Python, SQLite |
-| [HuntForge](../HuntForge) | MITRE ATT&CK threat hunt playbook generator — T-code to hypothesis, KQL/SPL queries, expected artifacts, and confidence score | Hunt | Flask, Python, SQLite |
-| [DriftWatch](../DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
-| [ClusterIQ](../ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
-| [AtomicLoop](../AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls | Purple Team | Flask, Python, SQLite |
+| [LogNorm](https://github.com/Rootless-Ghost/LogNorm) | Log source normalizer — maps Sysmon, Windows Event Log, Wazuh, syslog, and CEF events to a shared ECS-lite schema; used as the data contract between v2 tools | Normalize | Flask, Python, SQLite |
+| [HuntForge](https://github.com/Rootless-Ghost/HuntForge) | MITRE ATT&CK threat hunt playbook generator — T-code to hypothesis, KQL/SPL queries, expected artifacts, and confidence score | Hunt | Flask, Python, SQLite |
+| [DriftWatch](https://github.com/Rootless-Ghost/DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
+| [ClusterIQ](https://github.com/Rootless-Ghost/ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
+| [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls | Purple Team | Flask, Python, SQLite |
 
 ### Pipelines
 
