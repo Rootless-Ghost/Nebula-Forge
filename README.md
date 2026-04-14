@@ -1,8 +1,12 @@
+<div align="center">
+  
 # Nebula Forge
 
 > Open-source detection engineering and incident response tooling for SOC analysts and purple teams.
 
 Built by a Navy veteran transitioning into cybersecurity — every tool in this org solves a real problem a SOC analyst faces daily. Not tutorial projects. Working tooling.
+
+ </div>
 
 ---
 
