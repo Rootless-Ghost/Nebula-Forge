@@ -61,6 +61,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [DriftWatch](https://github.com/Rootless-Ghost/DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
 | [ClusterIQ](https://github.com/Rootless-Ghost/ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
 | [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls; `/api/run` and `/api/validate` accept an `X-API-Key` header when server-side auth is enabled (set `ATOMICLOOP_API_KEY` env var — see Setup below) | Purple Team | Flask, Python, SQLite |
+| [VulnForge](https://github.com/Rootless-Ghost/automated-exploit-finder) | Vulnerability & Exploit Intelligence — multi-source search across ExploitDB, NVD (NIST API v2), and Metasploit; CVE → CWE → ATT&CK technique mapping; exports ECS-lite NDJSON to LogNorm and seeds HuntForge and AtomicLoop directly from search results | Discover | Flask, Python, Port 5012 |
 
 ### Pipelines
 
@@ -69,7 +70,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [ir-chain](./ir-chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
 | [detection-pipeline](./detection-pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
 | [drift-scan](./pipelines/drift-scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
-| [purple-loop](./pipelines/purple-loop) | HuntForge → AtomicLoop → DriftWatch — generate hunt playbook, execute atomic technique, validate detection fired; full purple team validation in one command | Purple Team | Python, CLI |
+| [purple-loop](./pipelines/purple-loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
 
 ---
 
@@ -101,7 +102,7 @@ Key fields:
 | `process.name` | string | Process image name (where applicable) |
 | `process.command_line` | string | Full command line (where applicable) |
 
-This schema is the handoff point between AtomicLoop (event capture), LogNorm (normalization), DriftWatch (Sigma validation), and ClusterIQ (alert clustering) — and is the reason the purple-loop and drift-scan pipelines require no shared database.
+This schema is the handoff point between VulnForge (exploit discovery, ECS-lite export), AtomicLoop (event capture), LogNorm (normalization), DriftWatch (Sigma validation), and ClusterIQ (alert clustering) — and is the reason the purple-loop and drift-scan pipelines require no shared database.
 
 ---
 
