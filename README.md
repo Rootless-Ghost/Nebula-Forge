@@ -147,6 +147,14 @@ All tooling is validated against a live environment:
 
 ---
 
+## Cloud Coverage
+
+| Project | Layer | Description |
+|---------|-------|-------------|
+| [azure-soc-mini-lab](https://github.com/Rootless-Ghost/azure-soc-mini-lab) | Azure / Cloud | KQL detections, attack simulations, and IR documentation for the Azure control plane — the cloud detection companion to the on-prem Wazuh/Sysmon pipeline above. |
+
+---
+
 ## Built by
 
 [Rootless-Ghost](https://github.com/Rootless-Ghost) — Navy Corpsman, SOC analyst in training, purple team practitioner. Targeting SOC analyst and detection engineering roles in the Tampa Bay market.
