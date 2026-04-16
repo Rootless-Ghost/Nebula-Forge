@@ -152,6 +152,7 @@ All tooling is validated against a live environment:
 | Project | Layer | Description |
 |---------|-------|-------------|
 | [azure-soc-mini-lab](https://github.com/Rootless-Ghost/azure-soc-mini-lab) | Azure / Cloud | KQL detections, attack simulations, and IR documentation for the Azure control plane — the cloud detection companion to the on-prem Wazuh/Sysmon pipeline above. |
+| [aws-soc-lab](https://github.com/Rootless-Ghost/aws-soc-lab) | AWS / Cloud | CloudTrail-based detections (CloudWatch Logs Insights + Athena SQL), IAM/S3/EC2/CloudTrail attack simulations, GuardDuty finding integration, 5 IR reports, and a Lambda auto-response playbook — AWS companion to azure-soc-mini-lab. |
 
 ---
 
