@@ -44,13 +44,13 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [EndpointForge](https://github.com/Rootless-Ghost/EndpointForge) | Cross-platform HIDS with five scan modules — processes, network connections, filesystem integrity, registry (Windows), and persistence — MITRE ATT&CK mapped, with Wazuh log export | Detect | Flask, Python, CLI |
 | [EndpointTriage](https://github.com/Rootless-Ghost/EndpointTriage) | PowerShell forensic collector — 13 artifact categories (processes with hashes, network, scheduled tasks, registry persistence, event logs, DNS cache, named pipes, ARP, and more), outputs CSV/TXT files and a consolidated HTML report | Investigate | PowerShell |
 | [SIREN](https://github.com/Rootless-Ghost/SIREN) | NIST 800-61 IR report builder with timeline events, IOC and affected-system tracking, composite severity scoring (0–10), and Markdown/JSON export | Report | Flask, Python |
-| [ir-chain](./ir-chain) | Automated IR pipeline — connects EndpointTriage, log-analyzer, and SIREN into a single zero-touch workflow; watches for new triage output, runs log analysis, and POSTs a structured incident payload to SIREN; `--purge-processed` flag deletes processed case folders older than a configurable retention window (default 30 days) | Integrate | Python, CLI |
-| [detection-pipeline](./detection-pipeline) | IOC-to-rule automation — enriches indicators via Threat Intel Dashboard, filters by risk score, and fans out to SigmaForge, YaraForge, and SnortForge simultaneously to generate Sigma, YARA, and Snort rules in a single command | Detect | Python, CLI |
-| [nebula-dashboard](./nebula-dashboard) | Central hub — live online/offline status for every Nebula Forge tool, one-click launch buttons, pipeline activity panels for ir-chain and detection-pipeline, SIREN incident report viewer (click any report to see full timeline, IOCs, affected systems, and recommendations), and a live countdown timer showing seconds until the next auto-refresh | Operate | Flask, Python |
-| [Log Analyzer](https://github.com/Rootless-Ghost/log-analyzer) | CLI tool for parsing Windows Security Event Log (CSV) and Linux auth.log; detects brute force (4625), off-hours logins (4624), privilege escalation (4728/4732/4756), and account lockouts (4740) | Detect | Python |
-| [Phishing Analyzer](https://github.com/Rootless-Ghost/phishing-analyzer) | CLI tool for analyzing .eml files; checks SPF/DKIM/DMARC, From/Reply-To mismatch, suspicious URLs (shorteners, TLDs, IP-based), dangerous attachments, and urgency keywords; scores suspicion 0–100 | Detect | Python |
-| [Threat Intel Dashboard](https://github.com/Rootless-Ghost/Threat-intel-dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
-| [Security Awareness Training](https://github.com/Rootless-Ghost/security-awareness-training) | Multi-user web app with training modules, quizzes (70% pass threshold), phishing simulation scenarios with red-flag walkthroughs, and an admin dashboard for tracking user progress | Training | Flask, Python |
+| [ir-chain](./IR-Chain) | Automated IR pipeline — connects EndpointTriage, log-analyzer, and SIREN into a single zero-touch workflow; watches for new triage output, runs log analysis, and POSTs a structured incident payload to SIREN; `--purge-processed` flag deletes processed case folders older than a configurable retention window (default 30 days) | Integrate | Python, CLI |
+| [detection-pipeline](./Detection-Pipeline) | IOC-to-rule automation — enriches indicators via Threat Intel Dashboard, filters by risk score, and fans out to SigmaForge, YaraForge, and SnortForge simultaneously to generate Sigma, YARA, and Snort rules in a single command | Detect | Python, CLI |
+| [nebula-dashboard](./Nebula-Dashboard) | Central hub — live online/offline status for every Nebula Forge tool, one-click launch buttons, pipeline activity panels for ir-chain and detection-pipeline, SIREN incident report viewer (click any report to see full timeline, IOCs, affected systems, and recommendations), and a live countdown timer showing seconds until the next auto-refresh | Operate | Flask, Python |
+| [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | CLI tool for parsing Windows Security Event Log (CSV) and Linux auth.log; detects brute force (4625), off-hours logins (4624), privilege escalation (4728/4732/4756), and account lockouts (4740) | Detect | Python |
+| [Phishing Analyzer](https://github.com/Rootless-Ghost/Phishing-Analyzer) | CLI tool for analyzing .eml files; checks SPF/DKIM/DMARC, From/Reply-To mismatch, suspicious URLs (shorteners, TLDs, IP-based), dangerous attachments, and urgency keywords; scores suspicion 0–100 | Detect | Python |
+| [Threat Intel Dashboard](https://github.com/Rootless-Ghost/Threat-Intel-Dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
+| [Security Awareness Training](https://github.com/Rootless-Ghost/Security-Awareness-Training) | Multi-user web app with training modules, quizzes (70% pass threshold), phishing simulation scenarios with red-flag walkthroughs, and an admin dashboard for tracking user progress | Training | Flask, Python |
 
 ### Detection Suite v2
 
@@ -61,27 +61,27 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [DriftWatch](https://github.com/Rootless-Ghost/DriftWatch) | Sigma rule drift analyzer — classifies rules as never-fired, overfiring, or healthy against real event data; generates gap analysis and tuning suggestions | Detect | Flask, Python, SQLite |
 | [ClusterIQ](https://github.com/Rootless-Ghost/ClusterIQ) | Contextual alert clustering engine — groups signals by similarity with context scoring across user, asset, time, and TI tags; outputs suppressed / review / escalate verdicts | Detect | Flask, Python, SQLite |
 | [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls; `/api/run` and `/api/validate` accept an `X-API-Key` header when server-side auth is enabled (set `ATOMICLOOP_API_KEY` env var — see Setup below) | Purple Team | Flask, Python, SQLite |
-| [VulnForge](https://github.com/Rootless-Ghost/automated-exploit-finder) | Vulnerability & Exploit Intelligence — multi-source search across ExploitDB, NVD (NIST API v2), and Metasploit; CVE → CWE → ATT&CK technique mapping; exports ECS-lite NDJSON to LogNorm and seeds HuntForge and AtomicLoop directly from search results | Discover | Flask, Python, Port 5012 |
-| [WifiForge](https://github.com/Rootless-Ghost/wifi-security-analyzer) | Wireless network security analysis — passive 802.11 scan, deauth attack detection, WPS exposure, weak encryption and hidden SSID flagging; MITRE ATT&CK mapping (T1040/T1110/T1499/T1583); CRITICAL/HIGH/MEDIUM/LOW severity scoring; LogNorm NDJSON export; UI mock mode toggle for testing without hardware | Discover | Flask, Python, Scapy, Port 5013 |
+| [VulnForge](https://github.com/Rootless-Ghost/Automated-Exploit-Finder) | Vulnerability & Exploit Intelligence — multi-source search across ExploitDB, NVD (NIST API v2), and Metasploit; CVE → CWE → ATT&CK technique mapping; exports ECS-lite NDJSON to LogNorm and seeds HuntForge and AtomicLoop directly from search results | Discover | Flask, Python, Port 5012 |
+| [WifiForge](https://github.com/Rootless-Ghost/Wifi-Security-Analyzer) | Wireless network security analysis — passive 802.11 scan, deauth attack detection, WPS exposure, weak encryption and hidden SSID flagging; MITRE ATT&CK mapping (T1040/T1110/T1499/T1583); CRITICAL/HIGH/MEDIUM/LOW severity scoring; LogNorm NDJSON export; UI mock mode toggle for testing without hardware | Discover | Flask, Python, Scapy, Port 5013 |
 
 ### Pipelines
 
 | Pipeline | Purpose | Phase | Stack |
 |----------|---------|-------|-------|
-| [ir-chain](./ir-chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
-| [detection-pipeline](./detection-pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
-| [drift-scan](./pipelines/drift-scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
-| [purple-loop](./pipelines/purple-loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
+| [ir-chain](./IR-Chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
+| [detection-pipeline](./Detection-Pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
+| [drift-scan](./pipelines/Drift-Scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
+| [purple-loop](./pipelines/Purple-Loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
 
 ### Tool Cards
 
-#### [VulnForge](https://github.com/Rootless-Ghost/automated-exploit-finder) — Vulnerability & Exploit Intelligence (port 5012)
+#### [VulnForge](https://github.com/Rootless-Ghost/Automated-Exploit-Finder) — Vulnerability & Exploit Intelligence (port 5012)
 
 Aggregates exploit data from ExploitDB, NVD, and Metasploit. Maps CVEs to MITRE ATT&CK techniques via CWE→CAPEC→ATT&CK chaining. Exports LogNorm-compatible NDJSON and sends hunt seeds to HuntForge — feeding the purple-loop pipeline from the vulnerability discovery stage.
 
 `Python` `Flask` `CVE` `NVD` `MITRE ATT&CK` `Exploit Intelligence` `Purple Team`
 
-#### [WifiForge](https://github.com/Rootless-Ghost/wifi-security-analyzer) — Wireless Network Security Analyzer (port 5013)
+#### [WifiForge](https://github.com/Rootless-Ghost/Wifi-Security-Analyzer) — Wireless Network Security Analyzer (port 5013)
 
 Passively scans 802.11 networks, detects deauth attacks, WPS exposure, weak encryption, and hidden SSIDs. Maps findings to MITRE ATT&CK techniques (T1040/T1110/T1499/T1583) with CRITICAL/HIGH/MEDIUM/LOW severity scoring. Exports LogNorm-compatible NDJSON. UI mock mode toggle for testing without hardware.
 
