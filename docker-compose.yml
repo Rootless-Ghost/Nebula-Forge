@@ -1,0 +1,113 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nebula_forge
+      POSTGRES_USER: nebula
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nebula -d nebula_forge"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sigmaforge:
+    build: ./SigmaForge
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  lognorm:
+    build: ./LogNorm
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "5006:5006"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  huntforge:
+    build: ./HuntForge
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "5007:5007"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  driftwatch:
+    build: ./DriftWatch
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "5008:5008"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  clusteriq:
+    build: ./ClusterIQ
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "5009:5009"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  atomicloop:
+    build: ./AtomicLoop
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      ATOMICLOOP_API_KEY: ${ATOMICLOOP_API_KEY:-}
+    ports:
+      - "5011:5011"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  vulnforge:
+    build: ./VulnForge
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NVD_API_KEY: ${NVD_API_KEY:-}
+    ports:
+      - "5012:5012"
+
+  wififorge:
+    build: ./WifiForge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5013:5013"
+
+volumes:
+  postgres_data:
