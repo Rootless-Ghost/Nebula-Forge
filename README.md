@@ -144,7 +144,7 @@ python pipelines/purple-loop/main.py --technique T1021.006 --confirm
 All tooling is validated against a live environment:
 
 - **Wazuh server** — 192.168.x.x, v4.14.4
-- **Agents** — Windows Agent (windows), Linux Agent (linux), Kali Agent (offensive), Offensive Agent (offensive)
+- **Agents** — Windows Agent (windows), Linux Agent (linux), Kali Agent (offensive), Offensive Agent (offensive), Win10x2/AtomicLoop-Test (atomicloop-test)
 - **Sysmon** — SwiftOnSecurity config deployed on Windows Agent
 
 ---
