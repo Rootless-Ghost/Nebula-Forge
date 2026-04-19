@@ -469,7 +469,7 @@ def main() -> None:
 
     port = args.port if args.port is not None else int(_config.get("port", 5010))
     logger.info("nebula-dashboard starting on http://127.0.0.1:%d", port)
-    app.run(debug=args.debug, host="127.0.0.1", port=port)
+    app.run(debug=args.debug, host="0.0.0.0", port=port)
 
 
 if __name__ == "__main__":
