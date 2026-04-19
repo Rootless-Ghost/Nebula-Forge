@@ -1,3 +1,7 @@
+# config.docker.yaml — used when nebula-dashboard runs inside Docker Compose
+# URLs use Docker service names instead of 127.0.0.1
+# Mount this file or set CONFIG_PATH=/app/config.docker.yaml in the container
+
 # nebula-dashboard configuration
 # =================================
 # Adjust tool URLs to match your environment.
@@ -26,7 +30,7 @@ health_timeout: 3
 tools:
   sigmaforge:
     label:       "SigmaForge"
-    url:         "http://127.0.0.1:5000"
+    url:         "http://sigmaforge:5000"
     health_path: "/api/log-sources"
     description: "Sigma rule generator"
     category:    "Detection"
@@ -68,49 +72,49 @@ tools:
 
   lognorm:
     label:       "LogNorm"
-    url:         "http://127.0.0.1:5006"
+    url:         "http://lognorm:5006"
     health_path: "/api/health"
     description: "Log source normalizer — Sysmon / WEL / Wazuh / syslog / CEF → ECS-lite"
     category:    "Normalize"
 
   huntforge:
     label:       "HuntForge"
-    url:         "http://127.0.0.1:5007"
+    url:         "http://huntforge:5007"
     health_path: "/api/health"
     description: "MITRE ATT&CK threat hunt playbook generator"
     category:    "Detection"
 
   driftwatch:
     label:       "DriftWatch"
-    url:         "http://127.0.0.1:5008"
+    url:         "http://driftwatch:5008"
     health_path: "/api/health"
     description: "Detection drift analyzer for Sigma rules"
     category:    "Detection"
 
   clusteriq:
     label:       "ClusterIQ"
-    url:         "http://127.0.0.1:5009"
+    url:         "http://clusteriq:5009"
     health_path: "/api/health"
     description: "Contextual alert clustering engine"
     category:    "Detection"
 
   atomicloop:
     label:       "AtomicLoop"
-    url:         "http://127.0.0.1:5011"
+    url:         "http://atomicloop:5011"
     health_path: "/api/health"
     description: "Atomic Red Team test runner and detection validator"
     category:    "Detection"
 
   vulnforge:
     label:       "VulnForge"
-    url:         "http://127.0.0.1:5012"
+    url:         "http://vulnforge:5012"
     health_path: "/api/health"
     description: "Multi-source exploit finder — NVD / Metasploit / CVE→ATT&CK mapping"
     category:    "Intelligence"
 
   wififorge:
     label:       "WifiForge"
-    url:         "http://127.0.0.1:5013"
+    url:         "http://wififorge:5013"
     health_path: "/api/health"
     description: "802.11 beacon capture — deauth / WPS / hidden SSID detection"
     category:    "Intelligence"
@@ -145,14 +149,14 @@ pipelines:
   purple_loop:
     label:          "purple-loop"
     description:    "AtomicLoop → LogNorm → DriftWatch → Sigma validation"
-    atomicloop_url: "http://127.0.0.1:5011"
-    lognorm_url:    "http://127.0.0.1:5006"
-    driftwatch_url: "http://127.0.0.1:5008"
+    atomicloop_url: "http://atomicloop:5011"
+    lognorm_url:    "http://lognorm:5006"
+    driftwatch_url: "http://driftwatch:5008"
 
   drift_scan:
     label:          "drift-scan"
     description:    "Normalize raw logs → fetch Sigma rules → DriftWatch coverage analysis"
-    lognorm_url:    "http://127.0.0.1:5006"
-    sigmaforge_url: "http://127.0.0.1:5000"
-    driftwatch_url: "http://127.0.0.1:5008"
+    lognorm_url:    "http://lognorm:5006"
+    sigmaforge_url: "http://sigmaforge:5000"
+    driftwatch_url: "http://driftwatch:5008"
     output_dir:     "../pipelines/drift-scan/output"

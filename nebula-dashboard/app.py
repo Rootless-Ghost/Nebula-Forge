@@ -451,7 +451,7 @@ def index():
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="nebula-dashboard")
-    p.add_argument("--config", default="config.yaml")
+    p.add_argument("--config", default=os.environ.get("CONFIG_PATH", "config.yaml"))
     p.add_argument("--port", type=int, default=None)
     p.add_argument("--debug", action="store_true")
     p.add_argument(

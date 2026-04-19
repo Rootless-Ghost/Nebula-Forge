@@ -118,6 +118,25 @@ This schema is the handoff point between VulnForge (exploit discovery, ECS-lite 
 
 ---
 
+## Deployment
+
+### Docker (recommended)
+The full suite runs as a single Docker Compose stack with a shared Postgres backend.
+
+```bash
+git clone https://github.com/Rootless-Ghost/Nebula-Forge
+cd Nebula-Forge
+cp .env.example .env        # fill in NVD_API_KEY, ATOMICLOOP_API_KEY
+docker compose up -d        # starts all 10 services
+```
+
+Dashboard available at http://localhost:5010 — live status, one-click launch buttons, and incident report viewer.
+
+### Local (individual tools)
+Each tool can also be run standalone. Tools in Detection Suite v2 (LogNorm, HuntForge, DriftWatch, ClusterIQ, AtomicLoop) require a running Postgres instance — pass the `DATABASE_URL` env var at runtime. VulnForge and WifiForge have no external dependencies and run with a single `docker run` command. See the **Docker (Nebula Forge suite)** section in each tool's README for per-service instructions.
+
+---
+
 ## Setup
 
 ### Environment variables

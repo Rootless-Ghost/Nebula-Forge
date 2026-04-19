@@ -109,5 +109,24 @@ services:
     ports:
       - "5013:5013"
 
+  nebula-dashboard:
+    build: ./nebula-dashboard
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      ATOMICLOOP_API_KEY: ${ATOMICLOOP_API_KEY:-}
+      CONFIG_PATH: /app/config.docker.yaml
+    ports:
+      - "5010:5010"
+    depends_on:
+      - sigmaforge
+      - lognorm
+      - huntforge
+      - driftwatch
+      - clusteriq
+      - atomicloop
+      - vulnforge
+      - wififorge
+
 volumes:
   postgres_data:
