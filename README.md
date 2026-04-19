@@ -70,20 +70,6 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [drift-scan](./pipelines/Drift-Scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
 | [purple-loop](./pipelines/Purple-Loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
 
-### Tool Cards
-
-#### [VulnForge](https://github.com/Rootless-Ghost/Automated-Exploit-Finder) — Vulnerability & Exploit Intelligence (port 5012)
-
-Aggregates exploit data from ExploitDB, NVD, and Metasploit. Maps CVEs to MITRE ATT&CK techniques via CWE→CAPEC→ATT&CK chaining. Exports LogNorm-compatible NDJSON and sends hunt seeds to HuntForge — feeding the purple-loop pipeline from the vulnerability discovery stage.
-
-`Python` `Flask` `CVE` `NVD` `MITRE ATT&CK` `Exploit Intelligence` `Purple Team`
-
-#### [WifiForge](https://github.com/Rootless-Ghost/Wifi-Security-Analyzer) — Wireless Network Security Analyzer (port 5013)
-
-Passively scans 802.11 networks, detects deauth attacks, WPS exposure, weak encryption, and hidden SSIDs. Maps findings to MITRE ATT&CK techniques (T1040/T1110/T1499/T1583) with CRITICAL/HIGH/MEDIUM/LOW severity scoring. Exports LogNorm-compatible NDJSON. UI mock mode toggle for testing without hardware.
-
-`Python` `Flask` `Scapy` `802.11` `MITRE ATT&CK` `Wireless Security`
-
 ---
 
 ## Architecture
