@@ -166,9 +166,7 @@ All tooling is validated against a live environment:
 
 ## Built by
 
-[Rootless-Ghost](https://github.com/Rootless-Ghost) — Navy Corpsman, SOC analyst in training, purple team practitioner. Targeting SOC analyst and detection engineering roles in the Tampa Bay market.
-
-PSAA → PSAP → Sec+ → CCDL1 → PAPA → PJPT + PNPT
+[Rootless-Ghost](https://github.com/Rootless-Ghost) 
 
 ---
 
