@@ -169,7 +169,6 @@ All tooling is validated against a live environment:
 
 [Rootless-Ghost](https://github.com/Rootless-Ghost) 
 
----
 
 ## License
 
