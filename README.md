@@ -119,7 +119,7 @@ The full suite runs as a single Docker Compose stack with a shared Postgres back
 ```bash
 git clone https://github.com/Rootless-Ghost/Nebula-Forge
 cd Nebula-Forge
-cp .env.example .env        # fill in NVD_API_KEY, ATOMICLOOP_API_KEY
+cp .env.example .env        # add secrets (NVD_API_KEY, ATOMICLOOP_API_KEY, POSTGRES_PASSWORD — all required)
 docker compose up -d        # starts all 10 services
 ```
 
