@@ -53,7 +53,6 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | CLI tool for parsing Windows Security Event Log (CSV) and Linux auth.log; detects brute force (4625), off-hours logins (4624), privilege escalation (4728/4732/4756), and account lockouts (4740) | Detect | Python |
 | [Phishing Analyzer](https://github.com/Rootless-Ghost/Phishing-Analyzer) | CLI tool for analyzing .eml files; checks SPF/DKIM/DMARC, From/Reply-To mismatch, suspicious URLs (shorteners, TLDs, IP-based), dangerous attachments, and urgency keywords; scores suspicion 0–100 | Detect | Python |
 | [Threat Intel Dashboard](https://github.com/Rootless-Ghost/Threat-Intel-Dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
-| [Security Awareness Training](https://github.com/Rootless-Ghost/Security-Awareness-Training) | Multi-user web app with training modules, quizzes (70% pass threshold), phishing simulation scenarios with red-flag walkthroughs, and an admin dashboard for tracking user progress | Training | Flask, Python |
 
 ### Detection Suite v2
 
@@ -66,7 +65,6 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [AtomicLoop](https://github.com/Rootless-Ghost/AtomicLoop) | Atomic Red Team test runner — 20 embedded MITRE ATT&CK techniques, executes on Windows, captures ECS-lite events, validates Sigma rules fired; safety-gated with dry-run and confirm controls; `/api/run` and `/api/validate` accept an `X-API-Key` header when server-side auth is enabled (set `ATOMICLOOP_API_KEY` env var — see Setup below) | Purple Team | Flask, Python, SQLite / PostgreSQL |
 | [VulnForge](https://github.com/Rootless-Ghost/Automated-Exploit-Finder) | Vulnerability & Exploit Intelligence — multi-source search across ExploitDB, NVD (NIST API v2), and Metasploit; CVE → CWE → ATT&CK technique mapping; exports ECS-lite NDJSON to LogNorm and seeds HuntForge and AtomicLoop directly from search results | Discover | Flask, Python, Port 5012 |
 | [WifiForge](https://github.com/Rootless-Ghost/Wifi-Security-Analyzer) | Wireless network security analysis — passive 802.11 scan, deauth attack detection, WPS exposure, weak encryption and hidden SSID flagging; MITRE ATT&CK mapping (T1040/T1110/T1499/T1583); CRITICAL/HIGH/MEDIUM/LOW severity scoring; LogNorm NDJSON export; UI mock mode toggle for testing without hardware | Discover | Flask, Python, Scapy, Port 5013 |
-| [AgentWatch](https://github.com/Rootless-Ghost/AgentWatch) | Wazuh agent health monitor — polls the Wazuh REST API on a configurable interval, detects disconnected/never-connected agents, surfaces state changes in real time, and emits structured JSON log events for SIEM ingestion | Operate | Rust, Port — |
 
 ### Pipelines
 
@@ -165,15 +163,14 @@ All tooling is validated against a live environment:
 
 ---
 
-## Built by
-
-[Rootless-Ghost](https://github.com/Rootless-Ghost) 
-
-
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
+
+## Built by
+
+[Rootless-Ghost](https://github.com/Rootless-Ghost) 
 
 <div align="center">
 
