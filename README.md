@@ -51,8 +51,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [detection-pipeline](./Detection-Pipeline) | IOC-to-rule automation — enriches indicators via Threat Intel Dashboard, filters by risk score, and fans out to SigmaForge, YaraForge, and SnortForge simultaneously to generate Sigma, YARA, and Snort rules in a single command | Detect | Python, CLI |
 | [Nebula-Dashboard](nebula-dashboard) | Central hub — live online/offline status for every Nebula Forge tool, one-click launch buttons, pipeline activity panels for ir-chain and detection-pipeline, SIREN incident report viewer (click any report to see full timeline, IOCs, affected systems, and recommendations), and a live countdown timer showing seconds until the next auto-refresh | Operate | Flask, Python |
 | [Threat Intel Dashboard](https://github.com/Rootless-Ghost/Threat-Intel-Dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
-| [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | - Security Log Analyzer Python-based log analysis tool designed for SOC analysts with pattern matching and anomaly detection.
-Python Flask SIEM Log Analysis SOC
+| [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | - Security Log Analyzer Python-based log analysis tool designed for SOC analysts with pattern matching and anomaly detection. Python Flask SIEM Log Analysis SOC
 
 ### Detection Suite v2
 
