@@ -95,6 +95,50 @@ services:
     ports:
       - "5013:5013"
 
+  sigmaforge:
+    build: ./SigmaForge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:5000"
+
+  yaraforge:
+    build: ./YaraForge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5001:5001"
+
+  threat-intel-dashboard:
+    build: ./threat-intel-dashboard
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "5002"
+    ports:
+      - "5002:5002"
+
+  snortforge:
+    build: ./SnortForge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5003:5003"
+
+  siren:
+    build: ./SIREN
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5004:5004"
+
+  endpointforge:
+    build: ./EndpointForge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5005:5005"
+
   nebula-dashboard:
     build: ./nebula-dashboard
     restart: unless-stopped
@@ -105,6 +149,12 @@ services:
     ports:
       - "5010:5010"
     depends_on:
+      - sigmaforge
+      - yaraforge
+      - threat-intel-dashboard
+      - snortforge
+      - siren
+      - endpointforge
       - lognorm
       - huntforge
       - driftwatch

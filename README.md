@@ -51,7 +51,7 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 | [detection-pipeline](./Detection-Pipeline) | IOC-to-rule automation — enriches indicators via Threat Intel Dashboard, filters by risk score, and fans out to SigmaForge, YaraForge, and SnortForge simultaneously to generate Sigma, YARA, and Snort rules in a single command | Detect | Python, CLI |
 | [Nebula-Dashboard](nebula-dashboard) | Central hub — live online/offline status for every Nebula Forge tool, one-click launch buttons, pipeline activity panels for ir-chain and detection-pipeline, SIREN incident report viewer (click any report to see full timeline, IOCs, affected systems, and recommendations), and a live countdown timer showing seconds until the next auto-refresh | Operate | Flask, Python |
 | [Threat Intel Dashboard](https://github.com/Rootless-Ghost/Threat-Intel-Dashboard) | IOC reputation lookup for IPs, domains, file hashes, and URLs; queries VirusTotal and AbuseIPDB with auto-type detection; demo mode when no API keys are configured | Detect | Flask, Python |
-| [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | Python-based log analysis tool for SOC analysts — pattern matching and anomaly detection against Windows Security Event Log and Linux auth.log | Detect | Flask, Python |
+| [Log Analyzer](https://github.com/Rootless-Ghost/Log-Analyzer) | Python-based log analysis tool for SOC analysts — pattern matching and anomaly detection against Windows Security Event Log and Linux auth.log | Detect | Python, CLI |
 
 ### Detection Suite v2
 
@@ -108,6 +108,30 @@ This schema is the handoff point between VulnForge (exploit discovery, ECS-lite 
 
 ---
 
+## Quick Start
+
+1. **Clone Nebula Forge**
+   ```bash
+   git clone https://github.com/Rootless-Ghost/Nebula-Forge
+   cd Nebula-Forge
+   ```
+
+2. **Clone all tool repos**
+   ```bash
+   bash setup.sh   # Linux/Mac
+   setup.bat       # Windows
+   ```
+
+3. **Start the stack**
+   ```bash
+   cp .env.example .env   # add NVD_API_KEY, ATOMICLOOP_API_KEY, POSTGRES_PASSWORD
+   docker compose up -d
+   ```
+
+Dashboard available at http://localhost:5010.
+
+---
+
 ## Deployment
 
 ### Docker (recommended)
@@ -116,8 +140,10 @@ The full suite runs as a single Docker Compose stack with a shared Postgres back
 ```bash
 git clone https://github.com/Rootless-Ghost/Nebula-Forge
 cd Nebula-Forge
+bash setup.sh               # Linux/Mac — clones all 13 tool repos into Nebula-Forge/
+setup.bat                   # Windows
 cp .env.example .env        # add secrets (NVD_API_KEY, ATOMICLOOP_API_KEY, POSTGRES_PASSWORD — all required)
-docker compose up -d        # starts all 10 services
+docker compose up -d        # starts all 15 services
 ```
 
 Dashboard available at http://localhost:5010 — live status, one-click launch buttons, and incident report viewer.
