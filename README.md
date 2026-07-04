@@ -18,15 +18,9 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 ## Dashboard
 
-> 11/11 tools online — live status, pipeline activity, and incident report viewer.
+**13/13 tools online** — live status, one-click launch, pipeline activity, and incident report viewer.
 
-![Nebula Forge Dashboard](docs/NebulaForge-Dashboard-11.png)
-
-## Dashboard
-
-> 7/13 Containerized stack status — live online/offline status for all Dockerized services, pipeline activity, and incident report viewer.
-
-![Nebula Forge Dashboard](docs/Dashboard-with-Containers-up.png)
+![Nebula Forge Dashboard — 13/13 tools online](docs/Nebula_Forge_Dashboard.png)
 
 
 ## The pipeline
