@@ -12,8 +12,7 @@ Every tool in this org solves a real problem a SOC analyst faces daily. Not tuto
 
 ## What is Nebula Forge?
 
-Nebula Forge is a detection engineering and IR platform covering the full SOC workflow. Each tool occupies a defined lane — from writing detection rules to collecting forensic evidence to generating incident reports. The flagship capability is the closed-loop validation pipeline between **SigmaForge** and **EndpointForge**: rules authored in SigmaForge deploy as native Wazuh XML and get validated against live endpoint telemetry from EndpointForge — closing the gap between writing a detection and knowing it actually works.
-
+Nebula Forge is a detection engineering and IR platform covering the full SOC workflow. Each tool occupies a defined lane — from writing detection rules to collecting forensic evidence to generating incident reports. The flagship capability is the purple-loop pipeline — discover a CVE/exploit (VulnForge), simulate the technique (AtomicLoop), detect it in the SIEM (Wazuh/Splunk), validate the Sigma rule fired (DriftWatch), and generate a hunt playbook (HuntForge). Full purple-team validation in one command, validated end-to-end April 2026.
 ---
 
 ## Dashboard
