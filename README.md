@@ -63,10 +63,10 @@ Nebula Forge is a detection engineering and IR platform covering the full SOC wo
 
 | Pipeline | Purpose | Phase | Stack |
 |----------|---------|-------|-------|
-| [IR-Chain](./IR-Chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
-| [Detection-Pipeline](./Detection-Pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
-| [Drift-Scan](./pipelines/Drift-Scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
-| [Purple-Loop](./pipelines/Purple-Loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
+| [IR-Chain](./ir-chain) | EndpointTriage → log-analyzer → SIREN — zero-touch IR workflow | Integrate | Python, CLI |
+| [Detection-Pipeline](./detection-pipeline) | IOC → Threat Intel → Sigma / YARA / Snort — one command, three rule types | Detect | Python, CLI |
+| [Drift-Scan](./pipelines/drift-scan) | Normalize raw logs via LogNorm → fetch Sigma rules from SigmaForge → DriftWatch coverage analysis; surfaces detection gaps against real log data | Detect | Python, CLI |
+| [Purple-Loop](./pipelines/purple-loop) | VulnForge → AtomicLoop → Wazuh/Splunk → DriftWatch → HuntForge — discover CVE/exploit, simulate technique, detect in SIEM, validate rule fired, generate hunt playbook; full purple team validation in one command | Purple Team | Python, CLI |
 
 ---
 
