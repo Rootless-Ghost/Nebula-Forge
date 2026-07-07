@@ -260,4 +260,4 @@ For **SigmaForge**, the `Hashes` field in the `process_creation` log source is t
 
 ## License
 
-MIT
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
