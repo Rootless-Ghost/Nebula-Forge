@@ -24,9 +24,6 @@ Pass input arguments to the atomic test:
 
 Skip HuntForge (provide your own Sigma rule):
     python main.py --technique T1059.001 --confirm --sigma /path/to/rule.yml
-
-Custom config:
-    python main.py --technique T1059.001 --confirm --config /path/to/config.yaml
 """
 
 import argparse

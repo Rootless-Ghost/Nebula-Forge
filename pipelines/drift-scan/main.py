@@ -17,9 +17,6 @@ Scan a directory (all .json/.log files):
 Set look-back window (hours) and save report:
     python main.py --input /path/to/events.json --source sysmon --window 168
 
-Custom config:
-    python main.py --input /path/to/events.json --config /path/to/config.yaml
-
 Dry run (normalize only, skip DriftWatch):
     python main.py --input /path/to/events.json --dry-run
 """
